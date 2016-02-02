@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2403.robot;
+package org.usfirst.frc.team2403.robot.controller;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
