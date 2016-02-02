@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2403.robot.controller;
 
-import edu.wpi.first.wpilibj.*;
-
 public class PlasmaJoystick{
 	
 	public PlasmaButton A;
