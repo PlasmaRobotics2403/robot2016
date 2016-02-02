@@ -2,7 +2,7 @@
 
 package org.usfirst.frc.team2403.robot;
 
-import org.usfirst.frc.team2403.robot.controller.PlasmaJoystick;
+import org.usfirst.frc.team2403.robot.joystick.PlasmaJoystick;
 
 import edu.wpi.first.wpilibj.*;
 
@@ -16,7 +16,7 @@ public class Robot extends IterativeRobot {
 	 * @author Nic A
 	 */
     public void robotInit() {
-    	joystick = new PlasmaJoystick(0);
+
     }
     
     /**

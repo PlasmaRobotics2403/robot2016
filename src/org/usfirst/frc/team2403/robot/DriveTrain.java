@@ -1,8 +1,13 @@
 package org.usfirst.frc.team2403.robot;
 
+import org.usfirst.frc.team2403.robot.joystick.*;
+
 import edu.wpi.first.wpilibj.*;
 
 public class DriveTrain {
+	
+	private static final double maxSpeed = .8;
+	private static final double maxTurn = .4;
 	
 	CANTalon talonLeft;
 	CANTalon talonLeftSlave;
@@ -33,6 +38,18 @@ public class DriveTrain {
 		talonRightSlave.set(rightID);
 		
 		talonRight.reverseOutput(true);
+		
+	}
+	
+	public void FPSDrive(PlasmaAxis forwardAxis, PlasmaAxis turnAxis){
+		
+		double speedL = Math.abs(forwardAxis.getFilteredAxis() + .5 * maxTurn * turnAxis.getFilteredAxis());
+		double speedR = Math.abs(forwardAxis.getFilteredAxis() - .5 * maxTurn * turnAxis.getFilteredAxis());
+		
+			
+		
+		
+		
 		
 	}
 	

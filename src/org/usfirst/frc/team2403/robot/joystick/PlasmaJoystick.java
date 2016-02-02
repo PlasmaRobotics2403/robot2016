@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2403.robot.controller;
+package org.usfirst.frc.team2403.robot.joystick;
 
 public class PlasmaJoystick{
 	
