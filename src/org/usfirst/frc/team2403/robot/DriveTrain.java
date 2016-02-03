@@ -41,15 +41,63 @@ public class DriveTrain {
 		
 	}
 	
+	/**
+	 * Drives robot based on FPS controls
+	 * 
+	 * @param forwardAxis - Joystick axis that controls forward motion
+	 * @param turnAxis - Joystick axis that controls turning
+	 * 
+	 * @author Nic and Mark
+	 */
 	public void FPSDrive(PlasmaAxis forwardAxis, PlasmaAxis turnAxis){
 		
-		double speedL = Math.abs(forwardAxis.getFilteredAxis() + .5 * maxTurn * turnAxis.getFilteredAxis());
-		double speedR = Math.abs(forwardAxis.getFilteredAxis() - .5 * maxTurn * turnAxis.getFilteredAxis());
+		double forwardVal = forwardAxis.getFilteredAxis();
+		double turnVal = maxTurn * turnAxis.getFilteredAxis();
 		
-			
+		double absForward = Math.abs(forwardVal);
+		double absTurn = Math.abs(turnVal);
 		
+		int forwardSign = (forwardVal == 0) ? 0 : (int)(forwardVal / Math.abs(forwardVal));
+		int turnSign = (turnVal == 0) ? 0 : (int)(turnVal / Math.abs(turnVal));
 		
+		double speedL;
+		double speedR;
 		
+		if(turnVal == 0){ //Straight forward
+			speedL = forwardVal;
+			speedR = forwardVal;
+		}
+		else if(forwardVal == 0){ //Pivot turn
+			speedL = turnVal;
+			speedR = -turnVal;
+		}
+		else if(forwardSign == 1 && turnSign == 1){ //Forward right
+			speedL = forwardVal;
+			speedR = (absForward - absTurn < 0) ? 0 : absForward - absTurn;
+		}
+		else if(forwardSign == 1 && turnSign == -1){ //Forward left
+			speedL = (absForward - absTurn < 0) ? 0 : absForward - absTurn;
+			speedR = forwardVal;
+		}
+		else if(forwardSign == -1 && turnSign == 1){ //Backward right
+			speedL = forwardVal;
+			speedR = (absForward - absTurn < 0) ? 0 : -(absForward - absTurn);
+		}
+		else if(forwardSign == -1 && turnSign == -1){ //Backward left
+			speedL = (absForward - absTurn < 0) ? 0 : -(absForward - absTurn);
+			speedR = forwardVal;
+		}
+		else{
+			speedL = 0;
+			speedR = 0;
+			DriverStation.reportError("Bug @ fps drive code - no case triggered", false);
+		}
+		
+		speedL *= maxSpeed;
+		speedR *= maxSpeed;
+		
+		talonLeft.set(speedL);
+		talonRight.set(speedR);
 		
 	}
 	

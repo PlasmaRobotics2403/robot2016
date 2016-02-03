@@ -13,7 +13,13 @@ public class PlasmaTrigger {
 	
 	private DriverStation driveStation;
 
-	public PlasmaTrigger(int joystickPort, int triggerNum) {
+	/**
+	 * Constructor for plasma trigger
+	 * 
+	 * @param triggerNum - 
+	 * @param joystickPort
+	 */
+	public PlasmaTrigger(int triggerNum, int joystickPort) {
 		this.joystickPort = joystickPort;
 		this.triggerNumByte = (byte)triggerNum;
 	}
