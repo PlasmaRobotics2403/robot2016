@@ -26,15 +26,15 @@ public class DriveTrain {
 		talonLeft = new CANTalon(leftID);
 		talonLeftSlave = new CANTalon(leftSID);
 		talonRight = new CANTalon(rightID);
-		talonLeftSlave = new CANTalon(rightSID);
+		talonRightSlave = new CANTalon(rightSID);
 		
 		talonLeftSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
-		talonRightSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
-		
 		talonLeftSlave.set(leftID);
+		
+		talonRightSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		talonRightSlave.set(rightID);
 		
-		talonRight.reverseOutput(true);
+		
 		
 	}
 	
@@ -94,7 +94,7 @@ public class DriveTrain {
 		speedR *= Constants.maxSpeed;
 		
 		talonLeft.set(speedL);
-		talonRight.set(speedR);
+		talonRight.set(-speedR);
 		
 	}
 	

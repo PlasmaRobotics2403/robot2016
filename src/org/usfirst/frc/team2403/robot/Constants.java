@@ -6,10 +6,10 @@ public class Constants {
 	
 	public static final int JOYSTICK1_PORT = 0;
 	
-	public static final int TALON_L_PORT = 0;
-	public static final int TALON_L_SLAVE_PORT = 0;
-	public static final int TALON_R_PORT = 0;
-	public static final int TALON_R_SLAVE_PORT = 0;
+	public static final int TALON_L_PORT = 1;
+	public static final int TALON_L_SLAVE_PORT = 2;
+	public static final int TALON_R_PORT = 4;
+	public static final int TALON_R_SLAVE_PORT = 5;
 	
 	/* DRIVETRAIN CONSTANTS */
 	
