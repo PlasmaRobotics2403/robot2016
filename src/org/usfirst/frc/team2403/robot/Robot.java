@@ -3,20 +3,24 @@
 package org.usfirst.frc.team2403.robot;
 
 import org.usfirst.frc.team2403.robot.joystick.PlasmaJoystick;
-
 import edu.wpi.first.wpilibj.*;
 
 public class Robot extends IterativeRobot {
 
 	
 	PlasmaJoystick joystick;
+	DriveTrain driveTrain;
 	/**
 	 * Initialization for robot - called once when robot turns on
 	 * 
 	 * @author Nic A
 	 */
     public void robotInit() {
-
+    	joystick = new PlasmaJoystick(Constants.JOYSTICK1_PORT);
+    	driveTrain = new DriveTrain(Constants.TALON_L_PORT, 
+    								Constants.TALON_L_SLAVE_PORT, 
+    								Constants.TALON_R_PORT, 
+    								Constants.TALON_R_SLAVE_PORT);
     }
     
     /**
@@ -44,6 +48,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void teleopPeriodic() {
         
+    	driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
     	
     }
     

@@ -11,11 +11,12 @@ public class PlasmaDPad {
 	/**
 	 * Constructor for Plasma D-Pad
 	 * 
+	 * @param dPadNum - ID number of d-pad
 	 * @param joystickPort - Port of joystick that d-pad is connected to
 	 * 
 	 * @author Nic A
 	 */
-	public PlasmaDPad(int joystickPort) {
+	public PlasmaDPad(int dPadNum, int joystickPort) {
 		this.joystickPort = joystickPort;
 		this.driveStation = DriverStation.getInstance();
 	}

@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.*;
 
 public class PlasmaAxis {
 	
-	private static final double deadBand = .1;
-	
 	private final int joystickPort;
 	private final byte axisNumByte;
 	private final int dirMultiplier;
@@ -41,9 +39,9 @@ public class PlasmaAxis {
 	}
 	
 	/**
-	 * Returns the raw value from joystick after reversal
+	 * Returns the raw value from axis after reversal
 	 * 
-	 * @return Joystick value
+	 * @return Axis value
 	 * 
 	 * @author Nic A
 	 */
@@ -52,14 +50,14 @@ public class PlasmaAxis {
 	}
 	
 	/**
-	 * Returns the value of the joystick after reversal and deadband calculations
+	 * Returns the value of the axis after reversal and deadband calculations
 	 * 
-	 * @return Joystick value after deadband
+	 * @return Axis value after deadband
 	 * 
 	 * @author Nic A
 	 */
 	public double getFilteredAxis(){
-		if(Math.abs(getTrueAxis()) > deadBand){
+		if(Math.abs(getTrueAxis()) > JoystickConstants.deadBand){
 			return getTrueAxis();
 		}
 		else{

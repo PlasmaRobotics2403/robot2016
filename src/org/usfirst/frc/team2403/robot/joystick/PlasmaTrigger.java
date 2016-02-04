@@ -3,9 +3,7 @@ package org.usfirst.frc.team2403.robot.joystick;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class PlasmaTrigger {
-	
-	private static final double triggerThreshold = .1;
-	
+		
 	private final int joystickPort;
 	private final byte triggerNumByte;
 	
@@ -16,18 +14,34 @@ public class PlasmaTrigger {
 	/**
 	 * Constructor for plasma trigger
 	 * 
-	 * @param triggerNum - 
-	 * @param joystickPort
+	 * @param triggerNum - ID number of trigger
+	 * @param joystickPort - Port of joystick trigger is on
+	 * 
+	 * @author Nic A
 	 */
 	public PlasmaTrigger(int triggerNum, int joystickPort) {
 		this.joystickPort = joystickPort;
 		this.triggerNumByte = (byte)triggerNum;
 	}
 	
+	/**
+	 * Checks if trigger has been pressed past threshold
+	 * 
+	 * @return true if trigger value > threshold
+	 * 
+	 * @author Nic A
+	 */
 	public boolean isPressed(){
-		return driveStation.getStickAxis(joystickPort, triggerNumByte) > triggerThreshold;
+		return driveStation.getStickAxis(joystickPort, triggerNumByte) > JoystickConstants.triggerThreshold;
 	}
 	
+	/**
+	 * Checks if trigger has been toggled from off to on
+	 * 
+	 * @return True once when trigger goes from being off to being pressed
+	 * 
+	 * @author Nic A
+	 */
 	public boolean isOffToOn(){
 		if(!isHeld && isPressed()){
 			isHeld = true;
@@ -39,6 +53,14 @@ public class PlasmaTrigger {
 		}
 	}
 	
+	
+	/**
+	 * Checks if trigger has been toggled from on to off
+	 * 
+	 * @return True once when trigger goes from being pressed to off
+	 * 
+	 * @author Nic A
+	 */
 	public boolean isOnToOff(){
 		if(isHeld && !isPressed()){
 			isHeld = false;
@@ -50,12 +72,26 @@ public class PlasmaTrigger {
 		}
 	}
 	
+	/**
+	 * Returns the raw value from trigger after reversal
+	 * 
+	 * @return Joystick value
+	 * 
+	 * @author Nic
+	 */
 	public double getTrueAxis(){
 		return driveStation.getStickAxis(joystickPort, triggerNumByte);
 	}
 	
+	/**
+	 * Returns the value of the trigger after reversal and deadband calculations
+	 * 
+	 * @return Value of trigger axis if greater than threshold, 0 otherwise
+	 * 
+	 * @Author Nic A
+	 */
 	public double getFilteredAxis(){
-		if(Math.abs(getTrueAxis()) > triggerThreshold){
+		if(Math.abs(getTrueAxis()) > JoystickConstants.triggerThreshold){
 			return getTrueAxis();
 		}
 		else{

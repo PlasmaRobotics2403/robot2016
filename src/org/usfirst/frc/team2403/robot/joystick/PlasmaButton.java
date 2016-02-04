@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.*;
 
 public class PlasmaButton {
 	
-	
 	private final int joystickPort;
 	private final byte buttonNumByte;
 	

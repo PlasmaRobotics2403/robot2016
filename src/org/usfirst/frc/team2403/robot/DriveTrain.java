@@ -6,9 +6,6 @@ import edu.wpi.first.wpilibj.*;
 
 public class DriveTrain {
 	
-	private static final double maxSpeed = .8;
-	private static final double maxTurn = .4;
-	
 	CANTalon talonLeft;
 	CANTalon talonLeftSlave;
 	CANTalon talonRight;
@@ -52,7 +49,7 @@ public class DriveTrain {
 	public void FPSDrive(PlasmaAxis forwardAxis, PlasmaAxis turnAxis){
 		
 		double forwardVal = forwardAxis.getFilteredAxis();
-		double turnVal = maxTurn * turnAxis.getFilteredAxis();
+		double turnVal = Constants.maxTurn * turnAxis.getFilteredAxis();
 		
 		double absForward = Math.abs(forwardVal);
 		double absTurn = Math.abs(turnVal);
@@ -90,11 +87,11 @@ public class DriveTrain {
 		else{
 			speedL = 0;
 			speedR = 0;
-			DriverStation.reportError("Bug @ fps drive code - no case triggered", false);
+			DriverStation.reportError("You've got two empty halves of coconut and you're bangin' 'em together. (Bug @ fps drive code - no case triggered)", false);
 		}
 		
-		speedL *= maxSpeed;
-		speedR *= maxSpeed;
+		speedL *= Constants.maxSpeed;
+		speedR *= Constants.maxSpeed;
 		
 		talonLeft.set(speedL);
 		talonRight.set(speedR);

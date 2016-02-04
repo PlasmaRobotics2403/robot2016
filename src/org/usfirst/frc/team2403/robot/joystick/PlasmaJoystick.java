@@ -35,29 +35,38 @@ public class PlasmaJoystick{
 	public PlasmaJoystick(int port) {
 		this.port = port;
 		
-		A = new PlasmaButton(1, port);
-		B = new PlasmaButton(2, port);
-		X = new PlasmaButton(3, port);
-		Y = new PlasmaButton(4, port);
-		LB = new PlasmaButton(5, port);
-		RB = new PlasmaButton(6, port);
-		BACK = new PlasmaButton(7, port);
-		START = new PlasmaButton(8, port);
-		L3 = new PlasmaButton(9, port);
-		R3 = new PlasmaButton(10, port);
+		A = new PlasmaButton(JoystickConstants.A_ID, port);
+		B = new PlasmaButton(JoystickConstants.B_ID, port);
+		X = new PlasmaButton(JoystickConstants.X_ID, port);
+		Y = new PlasmaButton(JoystickConstants.Y_ID, port);
+		LB = new PlasmaButton(JoystickConstants.LB_ID, port);
+		RB = new PlasmaButton(JoystickConstants.RB_ID, port);
+		BACK = new PlasmaButton(JoystickConstants.BACK_ID, port);
+		START = new PlasmaButton(JoystickConstants.START_ID, port);
+		L3 = new PlasmaButton(JoystickConstants.L3_ID, port);
+		R3 = new PlasmaButton(JoystickConstants.R3_ID, port);
 		
-		LeftX = new PlasmaAxis(0, port);
-		LeftY = new PlasmaAxis(1, port, true);
-		RightX = new PlasmaAxis(4, port);
-		RightY = new PlasmaAxis(5, port, true);
+		LeftX = new PlasmaAxis(JoystickConstants.LEFTX_ID, port);
+		LeftY = new PlasmaAxis(JoystickConstants.LEFTY_ID, port, true);
+		RightX = new PlasmaAxis(JoystickConstants.RIGHTX_ID, port);
+		RightY = new PlasmaAxis(JoystickConstants.RIGHTY_ID, port, true);
 		
-		dPad = new PlasmaDPad(port);
+		dPad = new PlasmaDPad(JoystickConstants.DPAD_ID, port);
 		
-		LT = new PlasmaTrigger(2, port);
-		RT = new PlasmaTrigger(3, port);
+		LT = new PlasmaTrigger(JoystickConstants.LT_ID, port);
+		RT = new PlasmaTrigger(JoystickConstants.RT_ID, port);
 	}
 	
-	
+	/**
+	 * Returns joystick port
+	 * 
+	 * @return Joystick port
+	 * 
+	 * @author Nic A
+	 */
+	public int getPort(){
+		return port;
+	}
 	
 	
 }
