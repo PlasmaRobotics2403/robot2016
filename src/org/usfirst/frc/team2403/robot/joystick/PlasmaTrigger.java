@@ -22,6 +22,7 @@ public class PlasmaTrigger {
 	public PlasmaTrigger(int triggerNum, int joystickPort) {
 		this.joystickPort = joystickPort;
 		this.triggerNumByte = (byte)triggerNum;
+		driveStation = DriverStation.getInstance();
 	}
 	
 	/**

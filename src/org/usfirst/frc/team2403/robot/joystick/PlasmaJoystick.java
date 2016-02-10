@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2403.robot.joystick;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class PlasmaJoystick{
 	
 	public PlasmaButton A;
@@ -68,5 +70,34 @@ public class PlasmaJoystick{
 		return port;
 	}
 	
+	public void publishValues(){
+		SmartDashboard.putBoolean("A", A.isPressed());
+		SmartDashboard.putBoolean("B", B.isPressed());
+		SmartDashboard.putBoolean("X", X.isPressed());
+		SmartDashboard.putBoolean("Y", Y.isPressed());
+		SmartDashboard.putBoolean("LB", LB.isPressed());
+		SmartDashboard.putBoolean("RB", RB.isPressed());
+		SmartDashboard.putBoolean("BACK", BACK.isPressed());
+		SmartDashboard.putBoolean("START", START.isPressed());
+		SmartDashboard.putBoolean("L3", L3.isPressed());
+		SmartDashboard.putBoolean("R3", R3.isPressed());
+		
+		SmartDashboard.putBoolean("dpad0", 0 == dPad.getPOV());
+		SmartDashboard.putBoolean("dpad45", 45 == dPad.getPOV());
+		SmartDashboard.putBoolean("dpad90", 90 == dPad.getPOV());
+		SmartDashboard.putBoolean("dpad135", 135 == dPad.getPOV());
+		SmartDashboard.putBoolean("dpad180", 180 == dPad.getPOV());
+		SmartDashboard.putBoolean("dpad225", 225 == dPad.getPOV());
+		SmartDashboard.putBoolean("dpad270", 270 == dPad.getPOV());
+		SmartDashboard.putBoolean("dpad315", 315 == dPad.getPOV());
+		
+		SmartDashboard.putNumber("leftY", LeftY.getFilteredAxis());
+		SmartDashboard.putNumber("leftX", LeftX.getFilteredAxis());
+		SmartDashboard.putNumber("rightY", RightY.getFilteredAxis());
+		SmartDashboard.putNumber("rightX", RightX.getFilteredAxis());
+		
+		SmartDashboard.putNumber("LT", LT.getFilteredAxis());
+		SmartDashboard.putNumber("RT", RT.getFilteredAxis());
+	}
 	
 }

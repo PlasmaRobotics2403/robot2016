@@ -34,7 +34,7 @@ public class DriveTrain {
 		talonRightSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		talonRightSlave.set(rightID);
 		
-		
+		talonRight.setInverted(true);
 		
 	}
 	
@@ -94,7 +94,7 @@ public class DriveTrain {
 		speedR *= Constants.maxSpeed;
 		
 		talonLeft.set(speedL);
-		talonRight.set(-speedR);
+		talonRight.set(speedR);
 		
 	}
 	

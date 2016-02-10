@@ -4,12 +4,18 @@ package org.usfirst.frc.team2403.robot;
 
 import org.usfirst.frc.team2403.robot.joystick.PlasmaJoystick;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
 	
 	PlasmaJoystick joystick;
 	DriveTrain driveTrain;
+	VisionTracking vision;
+	Catapult catapult;
+	
+	boolean isOut = false;
+	boolean isIn = false;
 	/**
 	 * Initialization for robot - called once when robot turns on
 	 * 
@@ -21,6 +27,8 @@ public class Robot extends IterativeRobot {
     								Constants.TALON_L_SLAVE_PORT, 
     								Constants.TALON_R_PORT, 
     								Constants.TALON_R_SLAVE_PORT);
+    	catapult = new Catapult(Constants.TALON_CATAPULT_PORT);
+    	vision = new VisionTracking();
     }
     
     /**
@@ -48,8 +56,12 @@ public class Robot extends IterativeRobot {
 	 */
     public void teleopPeriodic() {
         
-    	driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
+    	//driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
+    	joystick.publishValues();
+    	catapult.publishData();
     	
+    	vision.update();
+    	//catapult.reload();
     }
     
     
