@@ -12,10 +12,9 @@ public class Robot extends IterativeRobot {
 	PlasmaJoystick joystick;
 	DriveTrain driveTrain;
 	VisionTracking vision;
-	Catapult catapult;
+	//Catapult catapult;
 	
-	boolean isOut = false;
-	boolean isIn = false;
+	int shootingState;
 	/**
 	 * Initialization for robot - called once when robot turns on
 	 * 
@@ -27,8 +26,9 @@ public class Robot extends IterativeRobot {
     								Constants.TALON_L_SLAVE_PORT, 
     								Constants.TALON_R_PORT, 
     								Constants.TALON_R_SLAVE_PORT);
-    	catapult = new Catapult(Constants.TALON_CATAPULT_PORT);
+    	//catapult = new Catapult(Constants.TALON_CATAPULT_PORT);
     	vision = new VisionTracking();
+    	shootingState = 0;
     }
     
     /**
@@ -56,12 +56,29 @@ public class Robot extends IterativeRobot {
 	 */
     public void teleopPeriodic() {
         
-    	//driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
+    	driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
     	joystick.publishValues();
-    	catapult.publishData();
+    	//catapult.publishData();
     	
     	vision.update();
-    	//catapult.reload();
+    	/*
+    	if(shootingState == 0 && joystick.A.isOffToOn()){
+    		shootingState = 1;
+    	}
+    	
+    	if(shootingState == 1){
+    		if(catapult.cycleShoot(1, 5000)){
+    			shootingState = 2;
+    		}
+    	}
+    	
+    	if(shootingState == 2 && !joystick.A.isPressed()){
+    		shootingState = 0;
+    		catapult.rest();
+    	}
+    	*/
+    	
+    	
     }
     
     

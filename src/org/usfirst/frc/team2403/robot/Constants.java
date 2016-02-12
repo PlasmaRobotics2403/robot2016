@@ -15,8 +15,8 @@ public class Constants {
 	
 	/* DRIVETRAIN CONSTANTS */
 	
-	public static final double maxSpeed = 0.4;
-	public static final double maxTurn = 0.2;
+	public static final double maxSpeed = 0.8;
+	public static final double maxTurn = 0.4;
 	
 	private Constants() {
 		//This prevents java from doing funky stuff
