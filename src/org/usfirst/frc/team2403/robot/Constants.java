@@ -15,8 +15,21 @@ public class Constants {
 	
 	/* DRIVETRAIN CONSTANTS */
 	
-	public static final double maxSpeed = 0.8;
-	public static final double maxTurn = 0.4;
+	public static final double MAX_SPEED = 0.8;
+	public static final double MAX_TURN = 0.6;
+	
+	/* CATAPULT CONSTANTS */
+	
+	public static final double RELOAD_SPEED = 20;
+	public static final double REST_SPEED = 0;
+	
+	public static final int RELOAD_PROFILE = 0;
+	public static final double[] RELOAD_PID = {.3, .001, 4};
+	
+	/* VISION TRACKING CONSTANTS */
+	
+	public static final double PICTURE_WIDTH = 320;
+	public static final double PICTURE_HEIGHT = 240;
 	
 	private Constants() {
 		//This prevents java from doing funky stuff

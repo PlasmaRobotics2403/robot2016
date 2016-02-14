@@ -49,7 +49,7 @@ public class DriveTrain {
 	public void FPSDrive(PlasmaAxis forwardAxis, PlasmaAxis turnAxis){
 		
 		double forwardVal = forwardAxis.getFilteredAxis();
-		double turnVal = Constants.maxTurn * turnAxis.getFilteredAxis();
+		double turnVal = Constants.MAX_TURN * turnAxis.getFilteredAxis();
 		
 		double absForward = Math.abs(forwardVal);
 		double absTurn = Math.abs(turnVal);
@@ -90,12 +90,25 @@ public class DriveTrain {
 			DriverStation.reportError("You've got two empty halves of coconut and you're bangin' 'em together. (Bug @ fps drive code - no case triggered)", false);
 		}
 		
-		speedL *= Constants.maxSpeed;
-		speedR *= Constants.maxSpeed;
+		speedL *= Constants.MAX_SPEED;
+		speedR *= Constants.MAX_SPEED;
 		
 		talonLeft.set(speedL);
 		talonRight.set(speedR);
 		
+	}
+	
+	/**
+	 * Tank drive for automated driving
+	 * 
+	 * @param left - Speed for left motor
+	 * @param right - Speed for right motor
+	 * 
+	 * @author Nic A
+	 */
+	public void autonTankDrive(double left, double right){
+		talonLeft.set(left);
+		talonRight.set(right);
 	}
 	
 	
