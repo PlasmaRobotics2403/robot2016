@@ -20,6 +20,7 @@ public class Catapult {
 	private boolean isReadyToFire;
 	private double home;
 	private ShootingState state;
+	private double limit;
 	
 	/**
 	 * Constructor for catapult object
@@ -33,10 +34,10 @@ public class Catapult {
     	catapult.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     	catapult.configNominalOutputVoltage(0, 0);
     	catapult.configPeakOutputVoltage(12, -12);
-    	//catapult.reverseSensor(true);
     	isReadyToFire = true;
-    	home = -catapult.getPulseWidthPosition();
+    	home = getDegrees();
     	state = ShootingState.WAIT_FOR_INPUT;
+    	limit = 0;
 	}
 	
 	/**
@@ -45,9 +46,12 @@ public class Catapult {
 	 * @author Nic A
 	 */
 	public void publishData(){
-		SmartDashboard.putNumber("Encoder", -catapult.getPulseWidthPosition());
+		SmartDashboard.putNumber("Encoder", catapult.getPulseWidthPosition());
+
+		SmartDashboard.putNumber("Degrees", getDegrees());
 		SmartDashboard.putNumber("Speed", catapult.getSpeed());
 		SmartDashboard.putNumber("Error", catapult.getError());
+		//SmartDashboard.putNumber("WTF", catapult.getReverseSoftLimit());
 		SmartDashboard.putNumber("Home", home);
 		SmartDashboard.putBoolean("Ready to fire", isReadyToFire);
 	}
@@ -56,19 +60,21 @@ public class Catapult {
 	 * Extends shooter outward to shoot ball
 	 * 
 	 * @param speed - Motor speed of shoot (0 to 1)
-	 * @param distance - Distance that motor rotates in encoder counts
+	 * @param distance - Distance that motor rotates in degrees
 	 * @return True if shoot is completed, false otherwise
 	 * 
 	 * @author Nic A
 	 */
 	public boolean shoot(double speed, double distance){
 		catapult.changeControlMode(TalonControlMode.PercentVbus);
-		catapult.setForwardSoftLimit((distance + home)/4096);
 		if(isReadyToFire){
 			isReadyToFire = false;
-			home = -catapult.getPulseWidthPosition();
+			home = getDegrees();
+			limit = toEncoderTicks(home + distance);
+			catapult.setReverseSoftLimit(toEncoderTicks(home + distance)/4096);
+			catapult.setForwardSoftLimit(toEncoderTicks(home + distance)/4096);
 		}
-		if(-catapult.getPulseWidthPosition() < distance + home){
+		if(catapult.getPulseWidthPosition() > limit){
 			catapult.set(-speed);
 			return false;
 		}
@@ -109,7 +115,7 @@ public class Catapult {
 	 * Handles shooting based on button input
 	 * @param button - Button that shooter is controlled from
 	 * @param speed - Speed of outward shoot
-	 * @param distance - Distance that motor rotates in encoder counts to shoot
+	 * @param distance - Distance that motor rotates in degrees to shoot
 	 * @author Nic A
 	 */
 	public void cycleShoot(PlasmaButton button, double speed, double distance){
@@ -124,11 +130,13 @@ public class Catapult {
 				if(shoot(speed, distance)){
 					state = ShootingState.RELOADING;
 				}
+				DriverStation.reportError("shoot\n", false);
 				break;
 			case RELOADING:
 				if(reload()){
 					state = ShootingState.RELOADED;
 				}
+				DriverStation.reportError("reload\n", false);
 				break;
 			case RELOADED:
 				rest();
@@ -139,4 +147,11 @@ public class Catapult {
 		}
 	}
 	
+	private double getDegrees() {
+		return catapult.getPulseWidthPosition() * Constants.DEGREES_PER_TICK;
+	}
+	
+	private double toEncoderTicks(double degrees) {
+		return degrees / Constants.DEGREES_PER_TICK;
+	}
 }

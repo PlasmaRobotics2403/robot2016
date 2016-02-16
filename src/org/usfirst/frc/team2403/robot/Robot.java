@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
     	
 
     	
-    	catapult.cycleShoot(joystick.A, 1, 5000);
+    	catapult.cycleShoot(joystick.A, .3, 90);
     	
     	
     	

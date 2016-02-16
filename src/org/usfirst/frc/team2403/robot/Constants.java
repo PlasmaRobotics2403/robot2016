@@ -20,6 +20,8 @@ public class Constants {
 	
 	/* CATAPULT CONSTANTS */
 	
+	public static final double DEGREES_PER_TICK = -0.0127840909; // -1 * 360 / (4096 * 5 * (22/16))
+	
 	public static final double RELOAD_SPEED = 20;
 	public static final double REST_SPEED = 0;
 	
