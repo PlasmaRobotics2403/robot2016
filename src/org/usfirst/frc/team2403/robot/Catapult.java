@@ -46,7 +46,7 @@ public class Catapult {
 	 * @author Nic A
 	 */
 	public void publishData(){
-		SmartDashboard.putNumber("Encoder", catapult.getPulseWidthPosition());
+		SmartDashboard.putNumber("Encoder", catapult.getPosition() * 4096);
 
 		SmartDashboard.putNumber("Degrees", getDegrees());
 		SmartDashboard.putNumber("Speed", catapult.getSpeed());
@@ -69,16 +69,21 @@ public class Catapult {
 		catapult.changeControlMode(TalonControlMode.PercentVbus);
 		if(isReadyToFire){
 			isReadyToFire = false;
-			home = getDegrees();
-			limit = toEncoderTicks(home + distance);
-			catapult.setReverseSoftLimit(toEncoderTicks(home + distance)/4096);
-			catapult.setForwardSoftLimit(toEncoderTicks(home + distance)/4096);
+			catapult.setPosition(0);
+			limit = (-5.0 * (22.0/16.0) * distance)/(360);
+			catapult.setForwardSoftLimit(limit);
+			catapult.setReverseSoftLimit(limit);
+			catapult.enableForwardSoftLimit(true);
+			catapult.enableReverseSoftLimit(true);
 		}
-		if(catapult.getPulseWidthPosition() > limit){
+		
+		if(catapult.getPosition() > limit){
+			
 			catapult.set(-speed);
 			return false;
 		}
 		else{
+			
 			catapult.set(0);
 			return true;
 		}
@@ -92,8 +97,10 @@ public class Catapult {
 	public boolean reload(){
 		catapult.changeControlMode(TalonControlMode.Speed);
 		catapult.setProfile(Constants.RELOAD_PROFILE);
+		catapult.enableForwardSoftLimit(false);
+		catapult.enableReverseSoftLimit(false);
 		catapult.set(Constants.RELOAD_SPEED);
-		if(-catapult.getPulseWidthPosition() < home + 100){
+		if(catapult.getPosition() > -0.05){
 			isReadyToFire = true;
 			return true;
 		}
@@ -125,6 +132,7 @@ public class Catapult {
 				if(button.isOffToOn()){
 					state = ShootingState.SHOOTING;
 				}
+				DriverStation.reportError("waiting\n", false);
 				break;
 			case SHOOTING:
 				if(shoot(speed, distance)){
@@ -143,6 +151,10 @@ public class Catapult {
 				if(!button.isPressed()){
 					state = ShootingState.WAIT_FOR_INPUT;
 				}
+				DriverStation.reportError("reloaded\n", false);
+				break;
+			default:
+				DriverStation.reportError("error\n", false);
 				break;
 		}
 	}
