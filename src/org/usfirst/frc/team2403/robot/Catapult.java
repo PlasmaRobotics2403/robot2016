@@ -35,6 +35,7 @@ public class Catapult {
     	catapult.configNominalOutputVoltage(0, 0);
     	catapult.configPeakOutputVoltage(12, -12);
     	isReadyToFire = true;
+    	catapult.setPosition(0);
     	home = getDegrees();
     	state = ShootingState.WAIT_FOR_INPUT;
     	limit = 0;
@@ -70,7 +71,7 @@ public class Catapult {
 		if(isReadyToFire){
 			isReadyToFire = false;
 			catapult.setPosition(0);
-			limit = (-5.0 * (22.0/16.0) * distance)/(360);
+			limit = distance/(Constants.DEGREES_PER_TICK * 4096);
 			catapult.setForwardSoftLimit(limit);
 			catapult.setReverseSoftLimit(limit);
 			catapult.enableForwardSoftLimit(true);
@@ -159,11 +160,13 @@ public class Catapult {
 		}
 	}
 	
+	/**
+	 * Calculates motor angle in degrees
+	 * @return Motor angle in degrees
+	 * @author Nic A
+	 */
 	private double getDegrees() {
 		return catapult.getPulseWidthPosition() * Constants.DEGREES_PER_TICK;
 	}
 	
-	private double toEncoderTicks(double degrees) {
-		return degrees / Constants.DEGREES_PER_TICK;
-	}
 }

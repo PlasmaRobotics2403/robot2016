@@ -13,6 +13,9 @@ public class Constants {
 	
 	public static final int TALON_CATAPULT_PORT = 10;
 	
+	public static final int TALON_LIFT_PORT = 11;
+	public static final int TALON_ROLLER_PORT = 12;
+	
 	/* DRIVETRAIN CONSTANTS */
 	
 	public static final double MAX_SPEED = 0.8;
@@ -32,6 +35,13 @@ public class Constants {
 	
 	public static final double PICTURE_WIDTH = 320;
 	public static final double PICTURE_HEIGHT = 240;
+	
+	/* INTAKE CONSTANTS */
+	
+	public static final double ROLLER_SPEED = .5;
+	public static final double ROLLER_STOPPED = 0;
+	public static final double MAX_LIFT_SPEED = .5;
+	public static final double LIFT_STOPPED = 0;
 	
 	private Constants() {
 		//This prevents java from doing funky stuff
