@@ -44,7 +44,7 @@ public class Catapult {
 	/**
 	 * Publishes various values to smart dashboard for debugging purposes
 	 * 
-	 * @author Nic A
+	 * @author Nic A & Troy M
 	 */
 	public void publishData(){
 		SmartDashboard.putNumber("Encoder", catapult.getPosition() * 4096);
@@ -77,9 +77,7 @@ public class Catapult {
 			catapult.enableForwardSoftLimit(true);
 			catapult.enableReverseSoftLimit(true);
 		}
-		
 		if(catapult.getPosition() > limit){
-			
 			catapult.set(-speed);
 			return false;
 		}
@@ -124,7 +122,7 @@ public class Catapult {
 	 * @param button - Button that shooter is controlled from
 	 * @param speed - Speed of outward shoot
 	 * @param distance - Distance that motor rotates in degrees to shoot
-	 * @author Nic A
+	 * @author Nic A & Troy M
 	 */
 	public void cycleShoot(PlasmaButton button, double speed, double distance){
 		switch(state){
@@ -133,26 +131,22 @@ public class Catapult {
 				if(button.isOffToOn()){
 					state = ShootingState.SHOOTING;
 				}
-				DriverStation.reportError("waiting\n", false);
 				break;
 			case SHOOTING:
 				if(shoot(speed, distance)){
 					state = ShootingState.RELOADING;
 				}
-				DriverStation.reportError("shoot\n", false);
 				break;
 			case RELOADING:
 				if(reload()){
 					state = ShootingState.RELOADED;
 				}
-				DriverStation.reportError("reload\n", false);
 				break;
 			case RELOADED:
 				rest();
 				if(!button.isPressed()){
 					state = ShootingState.WAIT_FOR_INPUT;
 				}
-				DriverStation.reportError("reloaded\n", false);
 				break;
 			default:
 				DriverStation.reportError("error\n", false);

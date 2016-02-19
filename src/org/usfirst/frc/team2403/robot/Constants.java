@@ -18,8 +18,8 @@ public class Constants {
 	
 	/* DRIVETRAIN CONSTANTS */
 	
-	public static final double MAX_SPEED = 0.8;
-	public static final double MAX_TURN = 0.6;
+	public static final double MAX_SPEED = 1;
+	public static final double MAX_TURN = 1;
 	
 	/* CATAPULT CONSTANTS */
 	
