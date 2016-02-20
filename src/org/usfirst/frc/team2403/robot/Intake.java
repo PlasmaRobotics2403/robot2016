@@ -10,19 +10,19 @@ public class Intake {
 	
 	private CANTalon lift;
 	private CANTalon roller;
-	private IntakePositions position;
+	private LiftHeight position;
 	
-	private enum IntakePositions{
-		ALL_DOWN(0), PICKUP_BALL(1), ALL_UP(2);
+	private enum LiftHeight{
+		ALL_UP(Constants.ALL_UP_POS), ALL_DOWN(Constants.ALL_DOWN_POS), LOAD_TO_SHOOT(Constants.LOAD_TO_SHOOT_POS), PICKUP_BALL(Constants.PICKUP_BALL_POS);
 		
-		final int id;
+		private double position;
 		
-		IntakePositions(int id){
-			this.id = id;
+		LiftHeight(double position){
+			this.position = position;
 		}
 		
-		int getID(){
-			return id;
+		double getPosition(){
+			return position;
 		}
 	}
 	
@@ -36,13 +36,13 @@ public class Intake {
 	public Intake(int liftID, int rollerID) {
 		lift = new CANTalon(liftID);
 		roller = new CANTalon(rollerID);
-		position = IntakePositions.ALL_DOWN;
 		
-		lift.changeControlMode(TalonControlMode.PercentVbus);
+		lift.changeControlMode(TalonControlMode.Position);
 		lift.configNominalOutputVoltage(0, 0);
-		lift.configPeakOutputVoltage(12, -12);
+		lift.configPeakOutputVoltage(2, -2);
 		lift.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		lift.setPosition(0);
+		position = LiftHeight.ALL_UP;
 	}
 	
 	public void display(){
@@ -67,7 +67,19 @@ public class Intake {
 		}
 	}
 	
+	public void liftControl(PlasmaButton up, PlasmaButton down){
+		if(up.isOffToOn()){
+			position = (position == LiftHeight.LOAD_TO_SHOOT) ? LiftHeight.ALL_UP : LiftHeight.LOAD_TO_SHOOT;
+		}
+		else if(down.isOffToOn()){
+			position = (position == LiftHeight.PICKUP_BALL) ? LiftHeight.ALL_DOWN : LiftHeight.PICKUP_BALL;
+		}
+		lift.set(position.getPosition());
+	}
+	
 	/**
+	 * @deprecated
+	 * 
 	 * Runs lift based on two trigger inputs
 	 * @param up - Trigger that makes lift go up
 	 * @param out - Trigger that makes lift go down
