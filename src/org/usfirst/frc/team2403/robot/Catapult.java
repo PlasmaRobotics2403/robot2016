@@ -52,7 +52,6 @@ public class Catapult {
 		SmartDashboard.putNumber("Degrees", getDegrees());
 		SmartDashboard.putNumber("Speed", catapult.getSpeed());
 		SmartDashboard.putNumber("Error", catapult.getError());
-		//SmartDashboard.putNumber("WTF", catapult.getReverseSoftLimit());
 		SmartDashboard.putNumber("Home", home);
 		SmartDashboard.putBoolean("Ready to fire", isReadyToFire);
 	}
@@ -124,11 +123,11 @@ public class Catapult {
 	 * @param distance - Distance that motor rotates in degrees to shoot
 	 * @author Nic A & Troy M
 	 */
-	public void cycleShoot(PlasmaButton button, double speed, double distance){
+	public void cycleShoot(PlasmaButton button, double speed, double distance, Intake intake){
 		switch(state){
 			case WAIT_FOR_INPUT:
 				rest();
-				if(button.isOffToOn()){
+				if(button.isOffToOn() && intake.isClearOfShoot()){
 					state = ShootingState.SHOOTING;
 				}
 				break;
@@ -152,6 +151,10 @@ public class Catapult {
 				DriverStation.reportError("error\n", false);
 				break;
 		}
+	}
+	
+	public boolean getIsReadyToFire(){
+		return isReadyToFire;
 	}
 	
 	/**

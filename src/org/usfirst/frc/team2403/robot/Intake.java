@@ -67,14 +67,24 @@ public class Intake {
 		}
 	}
 	
-	public void liftControl(PlasmaButton up, PlasmaButton down){
-		if(up.isOffToOn()){
+	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
+		if(lift.getPosition() > .300){
+			lift.configPeakOutputVoltage(3, -3);
+		}
+		else{
+			lift.configPeakOutputVoltage(2, -2);
+		}
+		if(up.isOffToOn() && catapult.getIsReadyToFire()){
 			position = (position == LiftHeight.LOAD_TO_SHOOT) ? LiftHeight.ALL_UP : LiftHeight.LOAD_TO_SHOOT;
 		}
 		else if(down.isOffToOn()){
 			position = (position == LiftHeight.PICKUP_BALL) ? LiftHeight.ALL_DOWN : LiftHeight.PICKUP_BALL;
 		}
 		lift.set(position.getPosition());
+	}
+	
+	public boolean isClearOfShoot(){
+		return (lift.getPosition() > .260 && (position == LiftHeight.ALL_DOWN || position == LiftHeight.PICKUP_BALL));
 	}
 	
 	/**

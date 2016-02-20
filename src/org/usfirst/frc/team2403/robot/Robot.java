@@ -60,8 +60,8 @@ public class Robot extends IterativeRobot {
         
     	joystick.publishValues();
     	catapult.publishData();
-    	catapult.cycleShoot(joystick.RB, 1, 90);
-    	intake.liftControl(joystick.Y, joystick.A);
+    	catapult.cycleShoot(joystick.RB, 1, 90, intake);
+    	intake.liftControl(joystick.Y, joystick.A, catapult);
     	intake.runRollers(joystick.X, joystick.B);
     	intake.display();
     }
