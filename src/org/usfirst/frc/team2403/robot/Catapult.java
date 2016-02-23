@@ -44,15 +44,10 @@ public class Catapult {
 	/**
 	 * Publishes various values to smart dashboard for debugging purposes
 	 * 
-	 * @author Nic A & Troy M
+	 * @author Nic A
 	 */
 	public void publishData(){
-		SmartDashboard.putNumber("Encoder", catapult.getPosition() * 4096);
-
-		SmartDashboard.putNumber("Degrees", getDegrees());
-		SmartDashboard.putNumber("Speed", catapult.getSpeed());
-		SmartDashboard.putNumber("Error", catapult.getError());
-		SmartDashboard.putNumber("Home", home);
+		SmartDashboard.putNumber("Shooter Angle", getDegrees());
 		SmartDashboard.putBoolean("Ready to fire", isReadyToFire);
 	}
 	
@@ -121,7 +116,8 @@ public class Catapult {
 	 * @param button - Button that shooter is controlled from
 	 * @param speed - Speed of outward shoot
 	 * @param distance - Distance that motor rotates in degrees to shoot
-	 * @author Nic A & Troy M
+	 * @param intake - Intake object used to check if intake is clear of shooter
+	 * @author Nic A
 	 */
 	public void cycleShoot(PlasmaButton button, double speed, double distance, Intake intake){
 		switch(state){
@@ -153,6 +149,11 @@ public class Catapult {
 		}
 	}
 	
+	/**
+	 * Checks if catapult is ready to fire
+	 * 
+	 * @return true if shooter is ready to fire, false otherwise
+	 */
 	public boolean getIsReadyToFire(){
 		return isReadyToFire;
 	}

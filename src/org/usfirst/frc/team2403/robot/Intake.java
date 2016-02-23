@@ -45,8 +45,13 @@ public class Intake {
 		position = LiftHeight.ALL_UP;
 	}
 	
-	public void display(){
-		SmartDashboard.putNumber("Intake", lift.getPosition());
+	/**
+	 * Publishes various values to smart dashboard for debugging purposes
+	 * 
+	 * @author Nic A
+	 */
+	public void publishData(){
+		SmartDashboard.putNumber("Intake Position", lift.getPosition() * 360);
 	}
 	
 	/**
@@ -67,6 +72,14 @@ public class Intake {
 		}
 	}
 	
+	/**
+	 * Controls position of lift: first press goes to primary location and repeated presses alternate between primary and secondary
+	 * 
+	 * @param up - Button that controls upper level positions 
+	 * @param down - Button that controls lower level positions 
+	 * @param catapult - Catapult object - used to check if shooter is clear of pickup
+	 * @author Nic A
+	 */
 	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
 		if(lift.getPosition() > .300){
 			lift.configPeakOutputVoltage(3, -3);
@@ -83,39 +96,13 @@ public class Intake {
 		lift.set(position.getPosition());
 	}
 	
+	/**
+	 * Checks if intake arm is clear of shooter
+	 * 
+	 * @return true if arm is clear, false otherwise
+	 */
 	public boolean isClearOfShoot(){
 		return (lift.getPosition() > .260 && (position == LiftHeight.ALL_DOWN || position == LiftHeight.PICKUP_BALL));
-	}
-	
-	/**
-	 * @deprecated
-	 * 
-	 * Runs lift based on two trigger inputs
-	 * @param up - Trigger that makes lift go up
-	 * @param out - Trigger that makes lift go down
-	 * @author Nic A
-	 */
-	public void runLift(PlasmaTrigger up, PlasmaTrigger down){
-		if(up.isPressed()){
-			lift.changeControlMode(TalonControlMode.PercentVbus);
-			lift.enableForwardSoftLimit(false);
-			lift.enableReverseSoftLimit(false);
-			lift.set(up.getFilteredAxis() * Constants.MAX_LIFT_SPEED);
-		}
-		else if(down.isPressed()){
-			lift.changeControlMode(TalonControlMode.PercentVbus);
-			lift.enableForwardSoftLimit(false);
-			lift.enableReverseSoftLimit(false);
-			lift.set(-down.getFilteredAxis() * Constants.MAX_LIFT_SPEED);
-		}
-		else{
-			lift.changeControlMode(TalonControlMode.Speed);
-			lift.setForwardSoftLimit(lift.getPosition());
-			lift.setReverseSoftLimit(lift.getPosition());
-			lift.enableForwardSoftLimit(true);
-			lift.enableReverseSoftLimit(true);
-			lift.set(Constants.LIFT_STOPPED);
-		}
 	}
 	
 }
