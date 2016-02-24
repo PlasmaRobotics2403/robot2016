@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
     								Constants.TALON_R_PORT, 
     								Constants.TALON_R_SLAVE_PORT);
     	catapult = new Catapult(Constants.TALON_CATAPULT_PORT);
-    	intake = new Intake(Constants.TALON_LIFT_PORT, Constants.TALON_ROLLER_PORT);
+    	intake = new Intake(Constants.TALON_LIFT_PORT,Constants.TALON_ROLLER_PORT);
     	vision = new VisionTracking();
     	CameraServer server = CameraServer.getInstance();
     	server.setQuality(50);
@@ -54,19 +54,21 @@ public class Robot extends IterativeRobot {
     /**
 	 * Main loop for teleop mode - called once every 20ms while in teleop mode
 	 * 
-	 * @author Nic A and Troy M.
+	 * @author Nic A
 	 */
     public void teleopPeriodic() {
     	//vision.update();
     	
         driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
         
+    	//driveTrain.autonTankDrive(.3, .3);
+    	
     	joystick.publishValues();
-    	//catapult.publishData();
-    	//catapult.cycleShoot(joystick.RB, 1, 90, intake);
-    	//intake.liftControl(joystick.Y, joystick.A, catapult);
-    	//intake.runRollers(joystick.X, joystick.B);
-    	//intake.publishData();
+    	catapult.publishData();
+    	catapult.cycleShoot(joystick.RB, 1, 90, intake);
+    	intake.liftControl(joystick.Y, joystick.A, catapult);
+    	intake.runRollers(joystick.X, joystick.B);
+    	intake.publishData();
     }
     
     

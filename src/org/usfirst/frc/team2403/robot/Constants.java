@@ -9,12 +9,12 @@ public class Constants {
 	public static final int TALON_L_PORT = 1;
 	public static final int TALON_L_SLAVE_PORT = 2;
 	public static final int TALON_R_PORT = 4;
-	public static final int TALON_R_SLAVE_PORT = 5;
+	public static final int TALON_R_SLAVE_PORT = 3;
 	
-	public static final int TALON_CATAPULT_PORT = 10;
+	public static final int TALON_CATAPULT_PORT = 8;
 	
-	public static final int TALON_LIFT_PORT = 11;
-	public static final int TALON_ROLLER_PORT = 12;
+	public static final int TALON_LIFT_PORT = 6;
+	public static final int TALON_ROLLER_PORT = 5;
 	
 	/* DRIVETRAIN CONSTANTS */
 	
