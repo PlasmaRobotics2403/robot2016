@@ -41,7 +41,7 @@ public class Intake {
 		lift.configNominalOutputVoltage(0, 0);
 		lift.configPeakOutputVoltage(2, -2);
 		lift.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		lift.setPosition(0);
+		lift.setPosition(((double)(lift.getPulseWidthPosition()) / 4096.0) - 0.236);
 		position = LiftHeight.ALL_UP;
 	}
 	
@@ -52,6 +52,7 @@ public class Intake {
 	 */
 	public void publishData(){
 		SmartDashboard.putNumber("Intake Position", lift.getPosition() * 360);
+		SmartDashboard.putNumber("Abs", (double)(lift.getPulseWidthPosition()) / 4096.0);
 	}
 	
 	/**
