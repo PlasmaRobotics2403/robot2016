@@ -46,7 +46,7 @@ public class Constants {
 	public static final double ALL_UP_POS = 0;
 	public static final double ALL_DOWN_POS = .500;
 	public static final double LOAD_TO_SHOOT_POS = 0.115;
-	public static final double PICKUP_BALL_POS = 0.430;
+	public static final double PICKUP_BALL_POS = 0.415;
 	
 	private Constants() {
 		//This prevents java from doing funky stuff

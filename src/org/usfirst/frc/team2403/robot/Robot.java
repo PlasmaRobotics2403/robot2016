@@ -59,13 +59,13 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	//vision.update();
     	
-        driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
+        //driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
         
     	//driveTrain.autonTankDrive(.3, .3);
     	
     	joystick.publishValues();
     	catapult.publishData();
-    	catapult.cycleShoot(joystick.RB, 1, 90, intake);
+    	catapult.cycleShoot(joystick.RB, 1, 90, joystick.LB, .2, 45, intake);
     	intake.liftControl(joystick.Y, joystick.A, catapult);
     	intake.runRollers(joystick.X, joystick.B);
     	intake.publishData();

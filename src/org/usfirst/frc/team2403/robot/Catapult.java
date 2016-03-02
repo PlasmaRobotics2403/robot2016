@@ -18,9 +18,12 @@ public class Catapult {
 	
 	private CANTalon catapult;
 	private boolean isReadyToFire;
-	private double home;
+	//private double home;
 	private ShootingState state;
 	private double limit;
+	private PlasmaButton buttonUsed;
+	private double speedUsed;
+	private double distanceUsed;
 	
 	/**
 	 * Constructor for catapult object
@@ -36,7 +39,7 @@ public class Catapult {
     	catapult.configPeakOutputVoltage(12, -12);
     	isReadyToFire = true;
     	catapult.setPosition(0);
-    	home = getDegrees();
+    	//home = getDegrees();
     	state = ShootingState.WAIT_FOR_INPUT;
     	limit = 0;
 	}
@@ -111,6 +114,10 @@ public class Catapult {
 		catapult.set(Constants.REST_SPEED);
 	}
 	
+	public void cycleShoot(PlasmaButton button1, double speed1, double distance1, Intake intake){
+		cycleShoot(button1, speed1, distance1, null, 0, 0, intake);
+	}
+	
 	/**
 	 * Handles shooting based on button input
 	 * @param button - Button that shooter is controlled from
@@ -119,16 +126,25 @@ public class Catapult {
 	 * @param intake - Intake object used to check if intake is clear of shooter
 	 * @author Nic A
 	 */
-	public void cycleShoot(PlasmaButton button, double speed, double distance, Intake intake){
+	public void cycleShoot(PlasmaButton button1, double speed1, double distance1, PlasmaButton button2, double speed2, double distance2, Intake intake){
 		switch(state){
 			case WAIT_FOR_INPUT:
 				rest();
-				if(button.isOffToOn() && intake.isClearOfShoot()){
+				if(button1.isOffToOn() && intake.isClearOfShoot()){
+					buttonUsed = button1;
+					speedUsed = speed1;
+					distanceUsed = distance1;
+					state = ShootingState.SHOOTING;
+				}
+				else if(button2 != null && button2.isOffToOn() && intake.isClearOfShoot()){
+					buttonUsed = button2;
+					speedUsed = speed2;
+					distanceUsed = distance2;
 					state = ShootingState.SHOOTING;
 				}
 				break;
 			case SHOOTING:
-				if(shoot(speed, distance)){
+				if(shoot(speedUsed, distanceUsed)){
 					state = ShootingState.RELOADING;
 				}
 				break;
@@ -139,7 +155,7 @@ public class Catapult {
 				break;
 			case RELOADED:
 				rest();
-				if(!button.isPressed()){
+				if(!buttonUsed.isPressed()){
 					state = ShootingState.WAIT_FOR_INPUT;
 				}
 				break;

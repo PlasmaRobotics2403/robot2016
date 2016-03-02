@@ -82,11 +82,13 @@ public class Intake {
 	 * @author Nic A
 	 */
 	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
-		if(lift.getPosition() > .300){
+		if(isMovingUp()){
 			lift.configPeakOutputVoltage(3, -3);
+			DriverStation.reportError("up\n", false);
 		}
 		else{
 			lift.configPeakOutputVoltage(2, -2);
+			DriverStation.reportError("down\n", false);
 		}
 		if(up.isOffToOn() && catapult.getIsReadyToFire()){
 			position = (position == LiftHeight.LOAD_TO_SHOOT) ? LiftHeight.ALL_UP : LiftHeight.LOAD_TO_SHOOT;
@@ -104,6 +106,10 @@ public class Intake {
 	 */
 	public boolean isClearOfShoot(){
 		return (lift.getPosition() > .260 && (position == LiftHeight.ALL_DOWN || position == LiftHeight.PICKUP_BALL));
+	}
+	
+	public boolean isMovingUp(){
+		return (lift.getSpeed() > 0 && lift.getPosition() < .25) || (lift.getSpeed() < 0 && lift.getPosition() > .25);
 	}
 	
 }
