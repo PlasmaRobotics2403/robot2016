@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2403.robot;
 
-import org.usfirst.frc.team2403.robot.joystick.PlasmaButton;
+import org.usfirst.frc.team2403.robot.controllers.PlasmaButton;
+
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CANTalon.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

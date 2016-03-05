@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2403.robot.joystick;
+package org.usfirst.frc.team2403.robot.controllers;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2403.robot;
 
-import org.usfirst.frc.team2403.robot.joystick.*;
+import org.usfirst.frc.team2403.robot.controllers.*;
+
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -39,7 +40,7 @@ public class Intake {
 		
 		lift.changeControlMode(TalonControlMode.Position);
 		lift.configNominalOutputVoltage(0, 0);
-		lift.configPeakOutputVoltage(2, -2);
+		lift.configPeakOutputVoltage(3, -3);
 		lift.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		lift.setPosition(((double)(lift.getPulseWidthPosition()) / 4096.0) - 0.236);
 		position = LiftHeight.ALL_UP;
@@ -83,12 +84,12 @@ public class Intake {
 	 */
 	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
 		if(isMovingUp()){
-			lift.configPeakOutputVoltage(3, -3);
-			DriverStation.reportError("up\n", false);
+			lift.configPeakOutputVoltage(4, -4);
+			//DriverStation.reportError("up\n", false);
 		}
 		else{
-			lift.configPeakOutputVoltage(2, -2);
-			DriverStation.reportError("down\n", false);
+			lift.configPeakOutputVoltage(3, -3);
+			//DriverStation.reportError("down\n", false);
 		}
 		if(up.isOffToOn() && catapult.getIsReadyToFire()){
 			position = (position == LiftHeight.LOAD_TO_SHOOT) ? LiftHeight.ALL_UP : LiftHeight.LOAD_TO_SHOOT;
