@@ -2,6 +2,8 @@ package org.usfirst.frc.team2403.robot;
 
 import org.usfirst.frc.team2403.robot.controllers.*;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.*;
 
 public class DriveTrain {
@@ -10,6 +12,8 @@ public class DriveTrain {
 	CANTalon talonLeftSlave;
 	CANTalon talonRight;
 	CANTalon talonRightSlave;
+	
+	public AHRS navX;
 	
 	/**
 	 * Init for drive train
@@ -36,6 +40,8 @@ public class DriveTrain {
 		
 		talonRight.setInverted(true);
 		
+    	navX = new AHRS(SerialPort.Port.kMXP);
+    	navX.reset();
 	}
 	
 	/**
@@ -111,6 +117,8 @@ public class DriveTrain {
 		talonRight.set(right);
 	}
 	
-	
+	public void gyroStraight(double speed, double angle){
+		autonTankDrive(speed - .01*(navX.getAngle() - angle), speed + .01*(navX.getAngle() - angle));
+	}
 	
 }
