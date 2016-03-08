@@ -21,6 +21,7 @@ public class Robot extends IterativeRobot {
 	ControlPanel panel;
 	Climber climb;
 	
+	boolean navXWorkaround;
 	/**
 	 * Initialization for robot - called once when robot turns on
 	 * 
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
     	intake = new Intake(Constants.TALON_LIFT_PORT,Constants.TALON_ROLLER_PORT);
     	vision = new VisionTracking();
     	climb = new Climber(21, 22, 23);
+    	navXWorkaround = false;
     	/*CameraServer server = CameraServer.getInstance();
     	server.setQuality(50);
     	server.startAutomaticCapture("cam1");*/
@@ -48,7 +50,7 @@ public class Robot extends IterativeRobot {
 	 * @author Nic A
 	 */
     public void autonomousInit() {
-    	
+    	driveTrain.navX.zeroYaw();
     }
     
     /**
@@ -57,7 +59,8 @@ public class Robot extends IterativeRobot {
 	 * @author Nic A
 	 */
     public void autonomousPeriodic() {
-    	
+    	driveTrain.gyroStraight(.4, 0);
+        SmartDashboard.putNumber("navX", driveTrain.navX.getYaw());
     }
     
     /**
@@ -68,10 +71,11 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	//vision.update();
     	
-        //driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
-        SmartDashboard.putNumber("navX", driveTrain.navX.getAngle());
+        driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
+        SmartDashboard.putNumber("navX", driveTrain.navX.getYaw());
     	//driveTrain.autonTankDrive(.3, .3);
     	
+        //driveTrain.navX.zeroYaw();
     	joystick.publishValues();
     	catapult.publishData();
     	catapult.cycleShoot(joystick.RB, 1, 90, joystick.LB, .2, 60, intake);
@@ -79,8 +83,13 @@ public class Robot extends IterativeRobot {
     	intake.runRollers(joystick.X, joystick.B);
     	intake.publishData();
     	panel.set7Seg();
-    	climb.controlClimb(joystick.LT, joystick.RT, panel);
+    	if(navXWorkaround == false){
+    		driveTrain.navX.zeroYaw();
+    		navXWorkaround = true;
+    	}
+    	//
     }
     
+
     
 }

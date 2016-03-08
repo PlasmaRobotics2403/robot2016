@@ -41,7 +41,7 @@ public class DriveTrain {
 		talonRight.setInverted(true);
 		
     	navX = new AHRS(SerialPort.Port.kMXP);
-    	navX.reset();
+    	navX.zeroYaw();
 	}
 	
 	/**
@@ -118,7 +118,7 @@ public class DriveTrain {
 	}
 	
 	public void gyroStraight(double speed, double angle){
-		autonTankDrive(speed - .01*(navX.getAngle() - angle), speed + .01*(navX.getAngle() - angle));
+		autonTankDrive(speed - .01*(navX.getYaw() - angle), speed + .01*(navX.getYaw() - angle));
 	}
 	
 }
