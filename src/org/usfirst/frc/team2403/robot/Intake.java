@@ -42,7 +42,9 @@ public class Intake {
 		lift.configNominalOutputVoltage(0, 0);
 		lift.configPeakOutputVoltage(3, -3);
 		lift.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		lift.setPosition(((double)(lift.getPulseWidthPosition()) / 4096.0) - 1.236);
+		lift.setPID(Constants.INTAKE_PID[0], Constants.INTAKE_PID[1], Constants.INTAKE_PID[2]);
+		lift.setCloseLoopRampRate(Constants.INTAKE_RAMP);
+		lift.setPosition(((double)(lift.getPulseWidthPosition()) / 4096.0) - 1.236 /* <--- change this value when it breaks */);
 		position = LiftHeight.ALL_UP;
 	}
 	

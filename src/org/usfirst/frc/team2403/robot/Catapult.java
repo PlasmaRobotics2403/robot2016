@@ -38,6 +38,7 @@ public class Catapult {
     	catapult.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     	catapult.configNominalOutputVoltage(0, 0);
     	catapult.configPeakOutputVoltage(12, -12);
+    	catapult.setPID(Constants.RELOAD_PID[0], Constants.RELOAD_PID[1], Constants.RELOAD_PID[2]);
     	isReadyToFire = true;
     	catapult.setPosition(0);
     	//home = getDegrees();
