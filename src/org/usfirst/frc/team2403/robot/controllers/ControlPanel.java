@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2403.robot.controllers;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,6 +24,8 @@ public class ControlPanel {
 	
 	private final int port;
 	
+	private int autonMode;
+	
 	public ControlPanel(int port) {
 		
 		this.port = port;
@@ -41,29 +44,34 @@ public class ControlPanel {
 		axis1 = new PlasmaAxis(ControlPanelConstants.AXIS_1_ID, port);
 		axis2 = new PlasmaAxis(ControlPanelConstants.AXIS_2_ID, port);
 		axis3 = new PlasmaAxis(ControlPanelConstants.AXIS_3_ID, port);
+		
+		autonMode = 1;
 	}
 	
 	public int getPort(){
 		return port;
 	}
 	
-	int number = 0;
-	public void set7Seg(){
-		number = (button1.isPressed() ? 1 : number);
-		number = (button2.isPressed() ? 2 : number);
-		number = (button3.isPressed() ? 3 : number);
-		number = (button4.isPressed() ? 4 : number);
-		number = (button5.isPressed() ? 5 : number);
-		number = (button6.isPressed() ? 6 : number);
-		number = (button7.isPressed() ? 7 : number);
-		number = (button8.isPressed() ? 8 : number);
-		number = (button9.isPressed() ? 9 : number);
-		number = (toggleSwitch.isPressed() ? 0 : number);
-		FRCNetworkCommunicationsLibrary.HALSetJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[number], (short)0, (short)0);
-		
-		SmartDashboard.putNumber("Axis 1", axis1.getTrueAxis());
-		SmartDashboard.putNumber("Axis 2", axis2.getTrueAxis());
-		SmartDashboard.putNumber("Axis 3", axis3.getTrueAxis());
+	public int getSelectedMode(){
+		return autonMode;
+	}
+	
+	public void selectAutonMode(){
+		autonMode = (button1.isPressed() ? 1 : autonMode);
+		autonMode = (button2.isPressed() ? 2 : autonMode);
+		autonMode = (button3.isPressed() ? 3 : autonMode);
+		autonMode = (button4.isPressed() ? 4 : autonMode);
+		autonMode = (button5.isPressed() ? 5 : autonMode);
+		autonMode = (button6.isPressed() ? 6 : autonMode);
+		autonMode = (button7.isPressed() ? 7 : autonMode);
+		autonMode = (button8.isPressed() ? 8 : autonMode);
+		autonMode = (button9.isPressed() ? 9 : autonMode);
+		FRCNetworkCommunicationsLibrary.HALSetJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode], (short)0, (short)0);
+		//DriverStation.reportError(getSelectedMode() + "", false);
+	}
+	
+	public void lockSelection(){
+		FRCNetworkCommunicationsLibrary.HALSetJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode] | ControlPanelConstants.DECIMAL, (short)0, (short)0);
 	}
 
 }

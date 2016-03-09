@@ -41,7 +41,6 @@ public class DriveTrain {
 		talonRight.setInverted(true);
 		
     	navX = new AHRS(SerialPort.Port.kMXP);
-    	navX.zeroYaw();
 	}
 	
 	/**

@@ -31,6 +31,7 @@ public class ControlPanelConstants {
 	public static final int DISPLAY_7 = 0x0023;
 	public static final int DISPLAY_8 = 0x00EF;
 	public static final int DISPLAY_9 = 0x006F;
+	public static final int DECIMAL = 0x0010;
 	
 	public static final int[] DISPLAY_VALUES = {0x00E7, 0x0021, 0x00CB, 0x006B, 0x002D, 0x006E, 0x00EE, 0x0023, 0x00EF, 0x006F};
 	
