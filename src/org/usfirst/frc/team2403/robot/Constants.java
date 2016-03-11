@@ -6,15 +6,15 @@ public class Constants {
 	
 	public static final int JOYSTICK1_PORT = 0;
 	
-	public static final int TALON_L_PORT = 1;
-	public static final int TALON_L_SLAVE_PORT = 2;
-	public static final int TALON_R_PORT = 4;
-	public static final int TALON_R_SLAVE_PORT = 5;
+	public static final int TALON_L_PORT = 3;
+	public static final int TALON_L_SLAVE_PORT = 4;
+	public static final int TALON_R_PORT = 1;
+	public static final int TALON_R_SLAVE_PORT = 2;
 	
-	public static final int TALON_CATAPULT_PORT = 10;
+	public static final int TALON_CATAPULT_PORT = 8;
 	
-	public static final int TALON_LIFT_PORT = 11;
-	public static final int TALON_ROLLER_PORT = 12;
+	public static final int TALON_LIFT_PORT = 6;
+	public static final int TALON_ROLLER_PORT = 5;
 	
 	/* DRIVETRAIN CONSTANTS */
 	
@@ -25,7 +25,7 @@ public class Constants {
 	
 	public static final double DEGREES_PER_TICK = -0.0127840909; // -1 * 360 / (4096 * 5 * (22/16))
 	
-	public static final double RELOAD_SPEED = 20;
+	public static final double RELOAD_SPEED = 80;
 	public static final double REST_SPEED = 0;
 	
 	public static final int RELOAD_PROFILE = 0;
@@ -46,9 +46,9 @@ public class Constants {
 	public static final double ALL_UP_POS = 0;
 	public static final double ALL_DOWN_POS = .500;
 	public static final double LOAD_TO_SHOOT_POS = 0.115;
-	public static final double PICKUP_BALL_POS = 0.415;
+	public static final double PICKUP_BALL_POS = 0.450;
 	public static final double[] INTAKE_PID = {1, 0, 100};
-	public static final double INTAKE_RAMP = 2;
+	public static final double INTAKE_RAMP = 0;
 	
 	private Constants() {
 		//This prevents java from doing funky stuff

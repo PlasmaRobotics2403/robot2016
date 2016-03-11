@@ -98,7 +98,7 @@ public class Catapult {
 		catapult.enableForwardSoftLimit(false);
 		catapult.enableReverseSoftLimit(false);
 		catapult.set(Constants.RELOAD_SPEED);
-		if(catapult.getPosition() > -0.05){
+		if(catapult.getPosition() > -0.1){
 			isReadyToFire = true;
 			return true;
 		}

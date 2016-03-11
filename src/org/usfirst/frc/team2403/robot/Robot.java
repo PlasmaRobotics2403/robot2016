@@ -18,6 +18,7 @@ public class Robot extends IterativeRobot {
 	Intake intake;
 	ControlPanel panel;
 	Climber climb;
+	Autonomous auton;
 	
 	boolean navXWorkaround;
 	/**
@@ -36,9 +37,11 @@ public class Robot extends IterativeRobot {
     	intake = new Intake(Constants.TALON_LIFT_PORT,Constants.TALON_ROLLER_PORT);
     	vision = new VisionTracking();
     	climb = new Climber(21, 22, 23);
+    	auton = new Autonomous(driveTrain, intake);
     	CameraServer server = CameraServer.getInstance();
     	server.setQuality(50);
     	server.startAutomaticCapture("cam1");
+    	server.startAutomaticCapture("cam2");
     }
     
     public void disabledPeriodic(){
@@ -52,6 +55,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	panel.lockSelection();
+    	auton.initAuton();
     	driveTrain.navX.zeroYaw();
     }
     
@@ -64,22 +68,21 @@ public class Robot extends IterativeRobot {
     	
     	switch(panel.getSelectedMode()){
     		case 1:
-    			driveTrain.gyroStraight(.4, 0);
+    			auton.mode1();
     			break;
     		case 2:
-    			driveTrain.gyroStraight(.5, 0);
+    			auton.mode2();
     			break;
     		case 3:
-    			driveTrain.gyroStraight(.6, 0);
+    			auton.mode3();
     			break;
     		case 4:
-    			driveTrain.gyroStraight(.7, 0);
+    			auton.mode4();
     			break;
     		case 5:
-    			driveTrain.gyroStraight(.8, 0);
+    			auton.mode5();
     			break;
-    		case 6:
-    			driveTrain.gyroStraight(.9, 0);
+    		case 9:
     			break;
 			default:
 				break;
@@ -98,21 +101,14 @@ public class Robot extends IterativeRobot {
 	 * @author Nic A
 	 */
     public void teleopPeriodic() {
-    	//vision.update();
-    	
         driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
+        //driveTrain.autonTankDrive(.2, .2);
         SmartDashboard.putNumber("navX", driveTrain.navX.getYaw());
-    	joystick.publishValues();
+    	catapult.cycleShoot(joystick.RB, 1, 110, joystick.LB, .2, 90, intake);
     	catapult.publishData();
-    	catapult.cycleShoot(joystick.RB, 1, 90, joystick.LB, .2, 60, intake);
     	intake.liftControl(joystick.Y, joystick.A, catapult);
     	intake.runRollers(joystick.X, joystick.B);
     	intake.publishData();
-    	if(navXWorkaround == false){
-    		driveTrain.navX.zeroYaw();
-    		navXWorkaround = true;
-    	}
-    	//
     }
     
 

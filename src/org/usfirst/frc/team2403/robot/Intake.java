@@ -13,7 +13,7 @@ public class Intake {
 	private CANTalon roller;
 	private LiftHeight position;
 	
-	private enum LiftHeight{
+	public enum LiftHeight{
 		ALL_UP(Constants.ALL_UP_POS), ALL_DOWN(Constants.ALL_DOWN_POS), LOAD_TO_SHOOT(Constants.LOAD_TO_SHOOT_POS), PICKUP_BALL(Constants.PICKUP_BALL_POS);
 		
 		private double position;
@@ -44,7 +44,7 @@ public class Intake {
 		lift.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		lift.setPID(Constants.INTAKE_PID[0], Constants.INTAKE_PID[1], Constants.INTAKE_PID[2]);
 		lift.setCloseLoopRampRate(Constants.INTAKE_RAMP);
-		lift.setPosition(((double)(lift.getPulseWidthPosition()) / 4096.0) - 1.236 /* <--- change this value when it breaks */);
+		lift.setPosition(0 /*((double)(lift.getPulseWidthPosition()) / 4096.0)  - (-.240) /* <--- change this value when it breaks */);
 		position = LiftHeight.ALL_UP;
 	}
 	
@@ -86,11 +86,11 @@ public class Intake {
 	 */
 	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
 		if(isMovingUp()){
-			lift.configPeakOutputVoltage(4, -4);
+			lift.configPeakOutputVoltage(5, -5);
 			//DriverStation.reportError("up\n", false);
 		}
 		else{
-			lift.configPeakOutputVoltage(3, -3);
+			lift.configPeakOutputVoltage(4, -4);
 			//DriverStation.reportError("down\n", false);
 		}
 		if(up.isOffToOn() && catapult.getIsReadyToFire()){
@@ -100,6 +100,27 @@ public class Intake {
 			position = (position == LiftHeight.PICKUP_BALL) ? LiftHeight.ALL_DOWN : LiftHeight.PICKUP_BALL;
 		}
 		lift.set(position.getPosition());
+	}
+	
+	public void manualLift(LiftHeight height){
+		position = height;
+		if(isMovingUp()){
+			lift.configPeakOutputVoltage(5, -5);
+			//DriverStation.reportError("up\n", false);
+		}
+		else{
+			lift.configPeakOutputVoltage(4, -4);
+			//DriverStation.reportError("down\n", false);
+		}
+		lift.set(position.getPosition());
+	}
+	
+	public void manualRoller(double speed){
+		roller.set(speed);
+	}
+	
+	public double getHeight(){
+		return lift.getPosition();
 	}
 	
 	/**

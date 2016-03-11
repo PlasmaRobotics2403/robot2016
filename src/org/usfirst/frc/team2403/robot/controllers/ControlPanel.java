@@ -44,7 +44,7 @@ public class ControlPanel {
 		axis2 = new PlasmaAxis(ControlPanelConstants.AXIS_2_ID, port);
 		axis3 = new PlasmaAxis(ControlPanelConstants.AXIS_3_ID, port);
 		
-		autonMode = 1;
+		autonMode = 9;
 	}
 	
 	public int getPort(){

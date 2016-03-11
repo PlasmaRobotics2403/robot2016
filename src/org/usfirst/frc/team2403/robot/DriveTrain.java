@@ -5,6 +5,8 @@ import org.usfirst.frc.team2403.robot.controllers.*;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain {
 	
@@ -32,15 +34,34 @@ public class DriveTrain {
 		talonRight = new CANTalon(rightID);
 		talonRightSlave = new CANTalon(rightSID);
 		
+		
 		talonLeftSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		talonLeftSlave.set(leftID);
 		
 		talonRightSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		talonRightSlave.set(rightID);
 		
+		talonLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		talonRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		
+		
+		talonLeft.setPosition(0);
+		talonRight.setPosition(0);
+		
 		talonRight.setInverted(true);
 		
     	navX = new AHRS(SerialPort.Port.kMXP);
+    	
+    	
+	}
+	
+	public void resetEncoders(){
+		talonLeft.setPosition(0);
+		talonRight.setPosition(0);
+	}
+	
+	public double getDistance(){
+		return toDistance(talonLeft);
 	}
 	
 	/**
@@ -101,6 +122,13 @@ public class DriveTrain {
 		talonLeft.set(speedL);
 		talonRight.set(speedR);
 		
+		SmartDashboard.putNumber("left encoder", talonLeft.getPosition());
+		SmartDashboard.putNumber("right encoder", talonRight.getPosition());
+		SmartDashboard.putNumber("inches", getDistance());
+	}
+	
+	public double toDistance(CANTalon talon){
+		return talon.getPosition() * 25.5;
 	}
 	
 	/**
