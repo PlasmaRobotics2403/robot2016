@@ -30,7 +30,7 @@ public class Autonomous {
 		else{
 			intake.manualRoller(.5);
 		}
-		distanceDrive(205, .4, 0);
+		distanceDrive(205, .7, 0);
 		intake.manualLift(LiftHeight.ALL_UP);
 	}
 	
@@ -66,7 +66,7 @@ public class Autonomous {
 	public void mode4(){
 		switch(stage){
 		case 0:
-			if(distanceDrive(25, -.4, 0)){
+			if(distanceDrive(44, -.4, 0)){
 				stage++;
 			}
 			break;
@@ -79,7 +79,7 @@ public class Autonomous {
 			break;
 		case 2:
 			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
-			distanceDrive(25, -.4, 0);
+			distanceDrive(120, -.6, 0);
 			break;
 		}
 	}

@@ -86,11 +86,11 @@ public class Intake {
 	 */
 	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
 		if(isMovingUp()){
-			lift.configPeakOutputVoltage(5, -5);
+			lift.configPeakOutputVoltage(7, -7);
 			//DriverStation.reportError("up\n", false);
 		}
 		else{
-			lift.configPeakOutputVoltage(4, -4);
+			lift.configPeakOutputVoltage(6, -6);
 			//DriverStation.reportError("down\n", false);
 		}
 		if(up.isOffToOn() && catapult.getIsReadyToFire()){
