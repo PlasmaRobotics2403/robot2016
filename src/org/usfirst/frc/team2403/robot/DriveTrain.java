@@ -74,8 +74,8 @@ public class DriveTrain {
 	 */
 	public void FPSDrive(PlasmaAxis forwardAxis, PlasmaAxis turnAxis){
 		
-		double forwardVal = forwardAxis.getFilteredAxis();
-		double turnVal = Constants.MAX_TURN * turnAxis.getFilteredAxis();
+		double forwardVal = Math.pow(forwardAxis.getFilteredAxis(), 2);
+		double turnVal = Constants.MAX_TURN * Math.pow(turnAxis.getFilteredAxis(), 2);
 		
 		double absForward = Math.abs(forwardVal);
 		double absTurn = Math.abs(turnVal);
@@ -148,4 +148,7 @@ public class DriveTrain {
 		autonTankDrive(speed - .01*(navX.getYaw() - angle), speed + .01*(navX.getYaw() - angle));
 	}
 	
+	public void newGyroStraight(double speed, double angle){
+		
+	}
 }
