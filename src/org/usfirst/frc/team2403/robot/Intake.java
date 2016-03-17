@@ -14,7 +14,7 @@ public class Intake {
 	private LiftHeight position;
 	
 	public enum LiftHeight{
-		ALL_UP(Constants.ALL_UP_POS), ALL_DOWN(Constants.ALL_DOWN_POS), LOAD_TO_SHOOT(Constants.LOAD_TO_SHOOT_POS), PICKUP_BALL(Constants.PICKUP_BALL_POS);
+		ALL_UP(Constants.ALL_UP_POS), ALL_DOWN(Constants.ALL_DOWN_POS), LOAD_TO_SHOOT(Constants.LOAD_TO_SHOOT_POS), PICKUP_BALL(Constants.PICKUP_BALL_POS), CHEVAL(.35);
 		
 		private double position;
 		
@@ -40,10 +40,10 @@ public class Intake {
 		
 		lift.changeControlMode(TalonControlMode.Position);
 		lift.configNominalOutputVoltage(0, 0);
-		lift.configPeakOutputVoltage(3, -3);
+		lift.configPeakOutputVoltage(4, -4);
+		lift.setAllowableClosedLoopErr(20);
 		lift.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		lift.setPID(Constants.INTAKE_PID[0], Constants.INTAKE_PID[1], Constants.INTAKE_PID[2]);
-		lift.setCloseLoopRampRate(Constants.INTAKE_RAMP);
+		//lift.setCloseLoopRampRate(Constants.INTAKE_RAMP);
 		lift.setPosition(0 /*((double)(lift.getPulseWidthPosition()) / 4096.0)  - (-.240) /* <--- change this value when it breaks */);
 		position = LiftHeight.ALL_UP;
 	}
@@ -56,6 +56,7 @@ public class Intake {
 	public void publishData(){
 		SmartDashboard.putNumber("Intake Position", lift.getPosition() * 360);
 		SmartDashboard.putNumber("Abs", (double)(lift.getPulseWidthPosition()) / 4096.0);
+		SmartDashboard.putNumber("I accumulator", lift.GetIaccum());
 	}
 	
 	/**
@@ -84,27 +85,38 @@ public class Intake {
 	 * @param catapult - Catapult object - used to check if shooter is clear of pickup
 	 * @author Nic A
 	 */
-	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
-		if(isMovingUp()){
+	public void liftControl(PlasmaButton up, PlasmaButton down, PlasmaButton cheval, Catapult catapult){
+		/*if(isMovingUp()){
 			lift.configPeakOutputVoltage(7, -7);
 			//DriverStation.reportError("up\n", false);
 		}
 		else{
 			lift.configPeakOutputVoltage(6, -6);
 			//DriverStation.reportError("down\n", false);
-		}
+		}*/
 		if(up.isOffToOn() && catapult.getIsReadyToFire()){
 			position = (position == LiftHeight.LOAD_TO_SHOOT) ? LiftHeight.ALL_UP : LiftHeight.LOAD_TO_SHOOT;
 		}
 		else if(down.isOffToOn()){
 			position = (position == LiftHeight.PICKUP_BALL) ? LiftHeight.ALL_DOWN : LiftHeight.PICKUP_BALL;
 		}
+		else if(cheval.isOffToOn()){
+			position = LiftHeight.CHEVAL;
+		}
+		if(Math.abs(lift.getError()) > 300){
+			lift.setProfile(0);
+		}
+		else{
+			lift.setProfile(1);
+		}
 		lift.set(position.getPosition());
+		
+		SmartDashboard.putNumber("error", lift.getError());
 	}
 	
 	public void manualLift(LiftHeight height){
 		position = height;
-		if(isMovingUp()){
+		/*if(isMovingUp()){
 			lift.configPeakOutputVoltage(5, -5);
 			//DriverStation.reportError("up\n", false);
 		}
@@ -112,6 +124,7 @@ public class Intake {
 			lift.configPeakOutputVoltage(4, -4);
 			//DriverStation.reportError("down\n", false);
 		}
+		*/
 		lift.set(position.getPosition());
 	}
 	

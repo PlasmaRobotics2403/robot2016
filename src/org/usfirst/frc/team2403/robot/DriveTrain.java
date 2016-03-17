@@ -74,8 +74,8 @@ public class DriveTrain {
 	 */
 	public void FPSDrive(PlasmaAxis forwardAxis, PlasmaAxis turnAxis){
 		
-		double forwardVal = Math.pow(forwardAxis.getFilteredAxis(), 2);
-		double turnVal = Constants.MAX_TURN * Math.pow(turnAxis.getFilteredAxis(), 2);
+		double forwardVal = forwardAxis.getFilteredAxis() * Math.abs(forwardAxis.getFilteredAxis());
+		double turnVal = Constants.MAX_TURN * turnAxis.getFilteredAxis() * Math.abs(turnAxis.getFilteredAxis());
 		
 		double absForward = Math.abs(forwardVal);
 		double absTurn = Math.abs(turnVal);

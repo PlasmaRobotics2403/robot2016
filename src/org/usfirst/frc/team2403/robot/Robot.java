@@ -4,6 +4,7 @@ package org.usfirst.frc.team2403.robot;
 
 import org.usfirst.frc.team2403.robot.controllers.ControlPanel;
 import org.usfirst.frc.team2403.robot.controllers.PlasmaJoystick;
+import org.usfirst.frc.team2403.robot.sensors.RangeFinder;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,7 @@ public class Robot extends IterativeRobot {
 	ControlPanel panel;
 	Climber climb;
 	Autonomous auton;
+	RangeFinder range;
 	
 	boolean navXWorkaround;
 	/**
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
     	vision = new VisionTracking();
     	climb = new Climber(21, 22, 23);
     	auton = new Autonomous(driveTrain, intake);
+    	range = new RangeFinder(0);
     	CameraServer server = CameraServer.getInstance();
     	server.setQuality(50);
     	server.startAutomaticCapture("cam1");
@@ -46,6 +49,7 @@ public class Robot extends IterativeRobot {
     
     public void disabledPeriodic(){
     	panel.selectAutonMode();
+    	SmartDashboard.putNumber("range finder", range.getRange());
     }
     
     /**
@@ -106,9 +110,10 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("navX", driveTrain.navX.getYaw());
     	catapult.cycleShoot(joystick.RB, 1, 110, joystick.LB, .2, 90, intake);
     	catapult.publishData();
-    	intake.liftControl(joystick.Y, joystick.A, catapult);
+    	intake.liftControl(joystick.Y, joystick.A, joystick.START, catapult);
     	intake.runRollers(joystick.X, joystick.B);
     	intake.publishData();
+    	SmartDashboard.putNumber("range finder", range.getRange());
     }
     
 
