@@ -52,7 +52,6 @@ public class DriveTrain {
 		
     	navX = new AHRS(SerialPort.Port.kMXP);
     	
-    	
 	}
 	
 	public void resetEncoders(){

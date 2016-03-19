@@ -4,17 +4,22 @@ import org.usfirst.frc.team2403.robot.Intake.LiftHeight;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Autonomous {
 	
 	DriveTrain drive;
 	AHRS navX;
 	Intake intake;
 	int stage;
+	public boolean isDoingCheval;
+	int chevalStage;
 	
 	public Autonomous(DriveTrain drive, Intake intake){
 		this.drive = drive;
 		this.navX = drive.navX;
 		this.intake = intake;
+		isDoingCheval = false;
 	}
 	
 	public void initAuton(){
@@ -98,6 +103,39 @@ public class Autonomous {
 			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
 			distanceDrive(205, .4, 0);
 			break;
+		}
+	}
+	
+	
+	public boolean autoCheval(){
+		if(!isDoingCheval){
+			chevalStage = 0;
+			isDoingCheval = true;
+			drive.resetEncoders();
+		}
+		SmartDashboard.putNumber("cheval stage", chevalStage);
+		switch(chevalStage){
+		case 0:
+			if(distanceDrive(2, .4, 0)){
+				chevalStage++;
+			}
+			return false;
+		case 1:
+			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
+			if(intake.getHeight() > .4){
+				drive.resetEncoders();
+				chevalStage++;
+			}
+			return false;
+		case 2:
+			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
+			if(distanceDrive(60, -.6, 0)){
+				isDoingCheval = false;
+				return true;
+			}
+			return false;
+		default:
+			return false;
 		}
 	}
 	
