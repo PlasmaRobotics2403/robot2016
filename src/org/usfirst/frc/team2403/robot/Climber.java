@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2403.robot;
 
-import org.usfirst.frc.team2403.robot.controllers.ControlPanel;
+
 import org.usfirst.frc.team2403.robot.controllers.PlasmaTrigger;
 
 import edu.wpi.first.wpilibj.*;
@@ -8,25 +8,21 @@ import edu.wpi.first.wpilibj.*;
 public class Climber {
 
 	CANTalon frontTalon;
-	CANTalon backLeftTalon;
-	CANTalon backRightTalon;
+	CANTalon frontTalon2;
 	
-	public Climber(int frontPort, int backLeftPort, int backRightPort){
+	public Climber(int frontPort, int frontPort2){
 		frontTalon = new CANTalon(frontPort);
-		backLeftTalon = new CANTalon(backLeftPort);
-		backRightTalon = new CANTalon(backRightPort);
+		frontTalon2 = new CANTalon(frontPort2);
 	}
 	
-	public void controlClimb(PlasmaTrigger front, PlasmaTrigger back, ControlPanel panel){
-		if(panel.toggleSwitch.isPressed()){
-			frontTalon.set(front.getFilteredAxis());
-			backLeftTalon.set(back.getFilteredAxis());
-			backRightTalon.set(-back.getFilteredAxis());
+	public void controlClimb(PlasmaTrigger up, PlasmaTrigger down){
+		if(up.isPressed()){
+			frontTalon.set(up.getFilteredAxis());
+			frontTalon2.set(-up.getFilteredAxis());
 		}
 		else{
-			frontTalon.set(-front.getFilteredAxis());
-			backLeftTalon.set(-back.getFilteredAxis());
-			backRightTalon.set(back.getFilteredAxis());
+			frontTalon.set(-down.getFilteredAxis());
+			frontTalon2.set(down.getFilteredAxis());
 		}
 	}
 }

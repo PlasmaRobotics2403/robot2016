@@ -167,6 +167,33 @@ public class Catapult {
 		}
 	}
 	
+	public boolean autoShoot(double speed, double distance, Intake intake){
+		switch(state){
+		case WAIT_FOR_INPUT:
+			rest();
+			if(intake.isClearOfShoot()){
+				state = ShootingState.SHOOTING;
+				return false;
+			}
+			break;
+		case SHOOTING:
+			if(shoot(speed, distance)){
+				state = ShootingState.RELOADING;
+			}
+			break;
+		case RELOADING:
+			if(reload()){
+				state = ShootingState.WAIT_FOR_INPUT;
+				return true;
+			}
+			break;
+		default:
+			DriverStation.reportError("error\n", false);
+			break;
+		}
+		return false;
+	}
+	
 	/**
 	 * Checks if catapult is ready to fire
 	 * 

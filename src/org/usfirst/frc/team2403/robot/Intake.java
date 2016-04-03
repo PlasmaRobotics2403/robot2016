@@ -40,9 +40,10 @@ public class Intake {
 		
 		lift.changeControlMode(TalonControlMode.Position);
 		lift.configNominalOutputVoltage(0, 0);
-		lift.configPeakOutputVoltage(4, -4);
+		lift.configPeakOutputVoltage(6, -6);
 		lift.setAllowableClosedLoopErr(20);
 		lift.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		lift.setProfile(0);
 		//lift.setCloseLoopRampRate(Constants.INTAKE_RAMP);
 		lift.setPosition(0 /*((double)(lift.getPulseWidthPosition()) / 4096.0)  - (-.240) /* <--- change this value when it breaks */);
 		position = LiftHeight.ALL_UP;
@@ -103,12 +104,7 @@ public class Intake {
 		else if(cheval.isOffToOn()){
 			position = LiftHeight.CHEVAL;
 		}
-		if(Math.abs(lift.getError()) > 300){
-			lift.setProfile(0);
-		}
-		else{
-			lift.setProfile(1);
-		}
+		
 		lift.set(position.getPosition());
 		
 		SmartDashboard.putNumber("error", lift.getError());

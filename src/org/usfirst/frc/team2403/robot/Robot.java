@@ -38,8 +38,8 @@ public class Robot extends IterativeRobot {
     	catapult = new Catapult(Constants.TALON_CATAPULT_PORT);
     	intake = new Intake(Constants.TALON_LIFT_PORT,Constants.TALON_ROLLER_PORT);
     	vision = new VisionTracking();
-    	climb = new Climber(21, 22, 23);
-    	auton = new Autonomous(driveTrain, intake);
+    	climb = new Climber(21, 22);
+    	auton = new Autonomous(driveTrain, catapult, intake);
     	range = new RangeFinder(0);
     	CameraServer server = CameraServer.getInstance();
     	server.setQuality(50);
@@ -86,7 +86,11 @@ public class Robot extends IterativeRobot {
     		case 5:
     			auton.mode5();
     			break;
+    		case 8:
+    			auton.mode8();
+    			break;
     		case 9:
+    			auton.mode9();
     			break;
 			default:
 				break;
@@ -119,7 +123,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("navX", driveTrain.navX.getYaw());
     	catapult.cycleShoot(joystick.RB, 1, 110, joystick.LB, .2, 90, intake);
     	catapult.publishData();
-    	
+    	climb.controlClimb(joystick.LT, joystick.RT);
     	intake.publishData();
     	SmartDashboard.putNumber("range finder", range.getRange());
     }

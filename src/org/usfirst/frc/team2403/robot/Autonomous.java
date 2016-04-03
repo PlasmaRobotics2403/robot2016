@@ -10,14 +10,16 @@ public class Autonomous {
 	
 	DriveTrain drive;
 	AHRS navX;
+	Catapult catapult;
 	Intake intake;
 	int stage;
 	public boolean isDoingCheval;
 	int chevalStage;
 	
-	public Autonomous(DriveTrain drive, Intake intake){
+	public Autonomous(DriveTrain drive, Catapult catapult, Intake intake){
 		this.drive = drive;
 		this.navX = drive.navX;
+		this.catapult = catapult;
 		this.intake = intake;
 		isDoingCheval = false;
 	}
@@ -105,9 +107,63 @@ public class Autonomous {
 			break;
 		}
 	}
+
+
+public void mode8(){
+	switch(stage){
+		case 0:
+			intake.manualRoller(.7);
+			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
+			if(intake.getHeight() > .2){
+				stage++;
+			}
+			break;
+		case 1:
+			intake.manualRoller(0);
+			if(distanceDrive(170, .4, 0)){
+				stage++;
+			}
+			break;
+		case 2:
+			drive.resetEncoders();
+			intake.manualRoller(1);
+			intake.manualLift(Intake.LiftHeight.ALL_UP);
+			if(intake.getHeight() < 0.4){
+				intake.manualRoller(0);
+			}
+			if(angleTurn(50, .3)){
+				drive.resetEncoders();
+				stage++;
+			}
+			break;
+		case 3:
+			if(distanceDrive(75,0.4,50)){
+				drive.resetEncoders();
+				stage++;
+			}
+			break;
+		case 4:
+			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
+			if(distanceDrive(15,-0.2,50)){
+				drive.resetEncoders();
+				stage++;
+			}
+			break;
+		case 5:
+			if(catapult.autoShoot(1, 110, intake)){
+				stage ++;
+			}
+			break;
+		default:
+			break;
+	}
+}
+
+public void mode9(){
 	
+}
 	
-	public boolean autoCheval(){
+public boolean autoCheval(){
 		if(!isDoingCheval){
 			chevalStage = 0;
 			isDoingCheval = true;
@@ -139,6 +195,18 @@ public class Autonomous {
 		}
 	}
 	
+	private boolean angleTurn(double angle, double speed){
+		int direction = (int)((angle - navX.getYaw()) / Math.abs((angle - navX.getYaw())));
+		if(Math.abs(angle - navX.getYaw()) > 5){
+			drive.autonTankDrive(speed * direction, -speed * direction);
+			return false;
+		}
+		else{
+			drive.autonTankDrive(0, 0);
+			return true;
+		}
+	}
+
 	private boolean distanceDrive(double distance, double speed, double angle){
 		if(Math.abs(drive.getDistance()) < Math.abs(distance)){
 			drive.gyroStraight(speed, angle);
