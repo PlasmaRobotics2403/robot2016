@@ -89,9 +89,6 @@ public class Robot extends IterativeRobot {
     		case 8:
     			auton.mode8();
     			break;
-    		case 9:
-    			auton.mode9();
-    			break;
 			default:
 				break;
     	} 

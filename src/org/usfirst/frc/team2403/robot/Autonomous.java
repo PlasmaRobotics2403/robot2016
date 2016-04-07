@@ -4,6 +4,8 @@ import org.usfirst.frc.team2403.robot.Intake.LiftHeight;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous {
@@ -12,6 +14,7 @@ public class Autonomous {
 	AHRS navX;
 	Catapult catapult;
 	Intake intake;
+	Timer timer;
 	int stage;
 	public boolean isDoingCheval;
 	int chevalStage;
@@ -22,9 +25,11 @@ public class Autonomous {
 		this.catapult = catapult;
 		this.intake = intake;
 		isDoingCheval = false;
+		timer = new Timer();
 	}
 	
 	public void initAuton(){
+		timer.start();
 		stage = 0;
 		drive.resetEncoders();
 		navX.zeroYaw();
@@ -113,14 +118,14 @@ public void mode8(){
 	switch(stage){
 		case 0:
 			intake.manualRoller(.7);
-			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
+			intake.manualLift(Intake.LiftHeight.PICKUP_BALL);
 			if(intake.getHeight() > .2){
 				stage++;
 			}
 			break;
 		case 1:
 			intake.manualRoller(0);
-			if(distanceDrive(170, .4, 0)){
+			if(distanceDrive(180, .3, 0)){
 				stage++;
 			}
 			break;
@@ -131,25 +136,37 @@ public void mode8(){
 			if(intake.getHeight() < 0.4){
 				intake.manualRoller(0);
 			}
-			if(angleTurn(50, .3)){
+			if(angleTurn(65, .3)){
 				drive.resetEncoders();
 				stage++;
 			}
 			break;
 		case 3:
-			if(distanceDrive(75,0.4,50)){
+			if(distanceDrive(58,0.5,65)){
 				drive.resetEncoders();
 				stage++;
 			}
 			break;
 		case 4:
-			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
-			if(distanceDrive(15,-0.2,50)){
+			if(distanceDrive(32,-0.2,65)){
 				drive.resetEncoders();
+				intake.manualLift(Intake.LiftHeight.ALL_DOWN);
 				stage++;
 			}
 			break;
 		case 5:
+			if(distanceDrive(2,0.2,65)){
+				drive.resetEncoders();
+				stage++;
+			}
+			break;
+		case 6:
+			if(pause(2)){
+				stage++;
+			}
+			break;
+		case 7:
+			
 			if(catapult.autoShoot(1, 110, intake)){
 				stage ++;
 			}
@@ -157,10 +174,6 @@ public void mode8(){
 		default:
 			break;
 	}
-}
-
-public void mode9(){
-	
 }
 	
 public boolean autoCheval(){
@@ -218,4 +231,20 @@ public boolean autoCheval(){
 		}
 	}
 	
+	boolean isWaiting = false;
+	double tempTime;
+	private boolean pause(double time){
+		if(!isWaiting){
+			tempTime = timer.get();
+			isWaiting = true;
+		}
+		if(timer.get() - tempTime >= time){
+			isWaiting = false;
+			return true;
+		}
+		DriverStation.reportError(timer.get() + "", false);
+		return false;
+	}
 }
+
+	

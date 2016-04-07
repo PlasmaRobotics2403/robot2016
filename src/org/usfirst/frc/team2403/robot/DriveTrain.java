@@ -147,7 +147,4 @@ public class DriveTrain {
 		autonTankDrive(speed - .01*(navX.getYaw() - angle), speed + .01*(navX.getYaw() - angle));
 	}
 	
-	public void newGyroStraight(double speed, double angle){
-		
-	}
 }
