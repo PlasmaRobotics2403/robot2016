@@ -43,8 +43,8 @@ public class Robot extends IterativeRobot {
     	range = new RangeFinder(0);
     	CameraServer server = CameraServer.getInstance();
     	server.setQuality(50);
-    	server.startAutomaticCapture("cam1");
-    	server.startAutomaticCapture("cam2");
+    	server.startAutomaticCapture("cam0");
+    
     }
     
     public void disabledPeriodic(){

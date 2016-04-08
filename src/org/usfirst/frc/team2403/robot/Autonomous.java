@@ -35,15 +35,17 @@ public class Autonomous {
 		navX.zeroYaw();
 	}
 	
-	public void mode1(){
+	public void mode1()
+	{	
+		SmartDashboard.getNumber("distance  ", drive.getDistance());
 		if(drive.getDistance() > 20){
 			intake.manualRoller(0);
 		}
 		else{
 			intake.manualRoller(.5);
 		}
-		distanceDrive(205, .7, 0);
-		intake.manualLift(LiftHeight.ALL_UP);
+		distanceDrive(205, .8, 0);
+		intake.manualLift(LiftHeight.LOAD_TO_SHOOT);
 	}
 	
 	public void mode2(){
@@ -117,7 +119,7 @@ public class Autonomous {
 public void mode8(){
 	switch(stage){
 		case 0:
-			intake.manualRoller(.7);
+			intake.manualRoller(.5);
 			intake.manualLift(Intake.LiftHeight.PICKUP_BALL);
 			if(intake.getHeight() > .2){
 				stage++;
@@ -125,7 +127,7 @@ public void mode8(){
 			break;
 		case 1:
 			intake.manualRoller(0);
-			if(distanceDrive(180, .3, 0)){
+			if(distanceDrive(213, .5, 0)){
 				stage++;
 			}
 			break;
@@ -136,36 +138,32 @@ public void mode8(){
 			if(intake.getHeight() < 0.4){
 				intake.manualRoller(0);
 			}
-			if(angleTurn(65, .3)){
+			if(angleTurn(60, .3)){
 				drive.resetEncoders();
 				stage++;
 			}
 			break;
 		case 3:
-			if(distanceDrive(58,0.5,65)){
+			if(distanceDrive(95,0.6,60)){
+				drive.resetEncoders();
 				drive.resetEncoders();
 				stage++;
 			}
 			break;
 		case 4:
-			if(distanceDrive(32,-0.2,65)){
+			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
+			if(distanceDrive(2,0.2,60)){
 				drive.resetEncoders();
-				intake.manualLift(Intake.LiftHeight.ALL_DOWN);
 				stage++;
 			}
 			break;
 		case 5:
-			if(distanceDrive(2,0.2,65)){
-				drive.resetEncoders();
+			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
+			if(pause(1)){
 				stage++;
 			}
 			break;
 		case 6:
-			if(pause(2)){
-				stage++;
-			}
-			break;
-		case 7:
 			
 			if(catapult.autoShoot(1, 110, intake)){
 				stage ++;
@@ -175,7 +173,7 @@ public void mode8(){
 			break;
 	}
 }
-	
+
 public boolean autoCheval(){
 		if(!isDoingCheval){
 			chevalStage = 0;

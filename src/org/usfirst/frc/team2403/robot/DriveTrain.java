@@ -60,7 +60,7 @@ public class DriveTrain {
 	}
 	
 	public double getDistance(){
-		return toDistance(talonLeft);
+		return toDistance(talonRight);
 	}
 	
 	/**
@@ -121,8 +121,8 @@ public class DriveTrain {
 		talonLeft.set(speedL);
 		talonRight.set(speedR);
 		
-		SmartDashboard.putNumber("left encoder", talonLeft.getPosition());
-		SmartDashboard.putNumber("right encoder", talonRight.getPosition());
+		SmartDashboard.putNumber("left encoder", toDistance(talonLeft));
+		SmartDashboard.putNumber("right encoder", toDistance(talonRight));
 		SmartDashboard.putNumber("inches", getDistance());
 	}
 	
