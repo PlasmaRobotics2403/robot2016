@@ -160,7 +160,7 @@ public void mode8(){
 		case 5:
 			intake.manualLift(Intake.LiftHeight.ALL_DOWN);
 			if(pause(1)){
-				stage++;
+				stage = 20;//So it doesnt shoot
 			}
 			break;
 		case 6:
