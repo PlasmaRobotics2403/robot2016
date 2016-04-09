@@ -21,6 +21,7 @@ public class Robot extends IterativeRobot {
 	Climber climb;
 	Autonomous auton;
 	RangeFinder range;
+	//RGBController rgb;
 	
 	boolean navXWorkaround;
 	/**
@@ -41,6 +42,7 @@ public class Robot extends IterativeRobot {
     	climb = new Climber(21, 22);
     	auton = new Autonomous(driveTrain, catapult, intake);
     	range = new RangeFinder(0);
+    	//rgb = new RGBController(panel);
     	CameraServer server = CameraServer.getInstance();
     	server.setQuality(50);
     	server.startAutomaticCapture("cam0");
@@ -49,6 +51,7 @@ public class Robot extends IterativeRobot {
     
     public void disabledPeriodic(){
     	panel.selectAutonMode();
+    	//rgb.controlRGB();
     	SmartDashboard.putNumber("range finder", range.getRange());
     }
     
@@ -123,6 +126,7 @@ public class Robot extends IterativeRobot {
     	climb.controlClimb(joystick.LT, joystick.RT);
     	intake.publishData();
     	SmartDashboard.putNumber("range finder", range.getRange());
+    	//rgb.controlRGB();
     }
     
 

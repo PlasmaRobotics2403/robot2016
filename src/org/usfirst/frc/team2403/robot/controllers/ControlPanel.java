@@ -72,5 +72,5 @@ public class ControlPanel {
 	public void lockSelection(){
 		FRCNetworkCommunicationsLibrary.HALSetJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode] | ControlPanelConstants.DECIMAL, (short)0, (short)0);
 	}
-
+	
 }
