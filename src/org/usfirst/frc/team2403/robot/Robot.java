@@ -109,15 +109,11 @@ public class Robot extends IterativeRobot {
 	 * @author Nic A
 	 */
     public void teleopPeriodic() {
-    	if(joystick.BACK.isPressed() || auton.isDoingCheval){
-    		auton.autoCheval();
-    		
-    	}
-    	else{
-    		driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
-    		intake.liftControl(joystick.Y, joystick.A, joystick.START, catapult);
-        	intake.runRollers(joystick.X, joystick.B);
-    	}
+
+    	driveTrain.FPSDrive(joystick.LeftY, joystick.RightX);
+    	intake.liftControl(joystick.Y, joystick.A, catapult);
+        intake.runRollers(joystick.RT, joystick.LT);
+    	
         
         //driveTrain.autonTankDrive(.2, .2);
         SmartDashboard.putNumber("navX", driveTrain.navX.getYaw());

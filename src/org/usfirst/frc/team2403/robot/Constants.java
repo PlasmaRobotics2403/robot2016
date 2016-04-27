@@ -38,7 +38,7 @@ public class Constants {
 	
 	/* INTAKE CONSTANTS */
 	
-	public static final double ROLLER_SPEED = .75;
+	//public static final double ROLLER_SPEED = .75;
 	public static final double ROLLER_STOPPED = 0;
 	public static final double MAX_LIFT_SPEED = .5;
 	public static final double LIFT_STOPPED = 0;
@@ -46,7 +46,7 @@ public class Constants {
 	public static final double ALL_UP_POS = 0;
 	public static final double ALL_DOWN_POS = .500;
 	public static final double LOAD_TO_SHOOT_POS = 0.115;
-	public static final double PICKUP_BALL_POS = 0.420;
+	public static final double PICKUP_BALL_POS = 0.430;
 	public static final double[] INTAKE_PID = {1, 0, 100};
 	public static final double INTAKE_RAMP = 0;
 	

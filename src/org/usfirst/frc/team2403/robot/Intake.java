@@ -66,12 +66,12 @@ public class Intake {
 	 * @param out - Button that makes rollers push ball out
 	 * @author Nic A
 	 */
-	public void runRollers(PlasmaButton in, PlasmaButton out){
+	public void runRollers(PlasmaTrigger in, PlasmaTrigger out){
 		if(in.isPressed()){
-			roller.set(Constants.ROLLER_SPEED);
+			roller.set(.5 + in.getTrueAxis());
 		}
 		else if(out.isPressed()){
-			roller.set(-Constants.ROLLER_SPEED);
+			roller.set(-.5 - out.getTrueAxis());
 		}
 		else{
 			roller.set(Constants.ROLLER_STOPPED);
@@ -86,7 +86,7 @@ public class Intake {
 	 * @param catapult - Catapult object - used to check if shooter is clear of pickup
 	 * @author Nic A
 	 */
-	public void liftControl(PlasmaButton up, PlasmaButton down, PlasmaButton cheval, Catapult catapult){
+	public void liftControl(PlasmaButton up, PlasmaButton down, Catapult catapult){
 		/*if(isMovingUp()){
 			lift.configPeakOutputVoltage(7, -7);
 			//DriverStation.reportError("up\n", false);
@@ -101,26 +101,13 @@ public class Intake {
 		else if(down.isOffToOn()){
 			position = (position == LiftHeight.PICKUP_BALL) ? LiftHeight.ALL_DOWN : LiftHeight.PICKUP_BALL;
 		}
-		else if(cheval.isOffToOn()){
-			position = LiftHeight.CHEVAL;
-		}
 		
 		lift.set(position.getPosition());
-		
-		SmartDashboard.putNumber("error", lift.getError());
+		SmartDashboard.putNumber("target", position.getPosition());
 	}
 	
 	public void manualLift(LiftHeight height){
 		position = height;
-		/*if(isMovingUp()){
-			lift.configPeakOutputVoltage(5, -5);
-			//DriverStation.reportError("up\n", false);
-		}
-		else{
-			lift.configPeakOutputVoltage(4, -4);
-			//DriverStation.reportError("down\n", false);
-		}
-		*/
 		lift.set(position.getPosition());
 	}
 	

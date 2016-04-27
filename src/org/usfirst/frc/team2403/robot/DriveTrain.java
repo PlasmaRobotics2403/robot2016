@@ -60,7 +60,7 @@ public class DriveTrain {
 	}
 	
 	public double getDistance(){
-		return toDistance(talonRight);
+		return toDistance(talonLeft);
 	}
 	
 	/**
@@ -132,7 +132,7 @@ public class DriveTrain {
 	
 	/**
 	 * Tank drive for automated driving
-	 * 
+	 56* 
 	 * @param left - Speed for left motor
 	 * @param right - Speed for right motor
 	 * 
