@@ -95,7 +95,7 @@ public class Autonomous {
 			}
 			break;
 		case 2:
-			if(distanceDrive(1, .4, 0)){
+			if(distanceDrive(4, .4, 0)){
 				drive.resetEncoders();
 				stage++;
 			}
@@ -119,7 +119,7 @@ public class Autonomous {
 		case 5:
 			intake.manualLift(Intake.LiftHeight.ALL_UP);
 			intake.manualRoller(0);
-			distanceDrive(110, -.6, 0);
+			distanceDrive(134, -.6, 0);
 			break;
 		}
 	}

@@ -60,7 +60,7 @@ public class DriveTrain {
 	}
 	
 	public double getDistance(){
-		return toDistance(talonLeft);
+		return toDistance(talonRight);
 	}
 	
 	/**
