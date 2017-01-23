@@ -59,7 +59,7 @@ public class ControlPanel {
 	}
 	
 	public void selectAutonMode(){
-		
+		/*
 		autonMode = (button1.isPressed() ? 1 : autonMode);
 		autonMode = (button2.isPressed() ? 2 : autonMode);
 		autonMode = (button3.isPressed() ? 3 : autonMode);
@@ -69,9 +69,10 @@ public class ControlPanel {
 		autonMode = (button7.isPressed() ? 7 : autonMode);
 		autonMode = (button8.isPressed() ? 8 : autonMode);
 		autonMode = (button9.isPressed() ? 9 : autonMode);
-		SmartDashboard.putNumber("auton", autonMode);
+		*/
+		//SmartDashboard.putNumber("auton", autonMode);
 
-		//autonMode = (int)SmartDashboard.getNumber("auton");
+		autonMode = (int)SmartDashboard.getNumber("auton");
 		FRCNetworkCommunicationsLibrary.HALSetJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode], (short)0, (short)0);
 		//DriverStation.reportError(getSelectedMode() + "", false);
 	}

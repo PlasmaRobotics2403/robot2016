@@ -95,11 +95,12 @@ public class Robot extends IterativeRobot {
 			default:
 				break;
     	} 
+    	
         SmartDashboard.putNumber("navX", driveTrain.navX.getYaw());
     }
     
     public void teleopInit(){
-    	panel.lockSelection();
+    	//panel.lockSelection();
     	driveTrain.navX.zeroYaw();
     }
     
