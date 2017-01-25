@@ -2,9 +2,8 @@ package org.usfirst.frc.team2403.robot;
 
 import org.usfirst.frc.team2403.robot.controllers.*;
 
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake {

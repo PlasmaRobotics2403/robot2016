@@ -9,6 +9,7 @@ import org.usfirst.frc.team2403.robot.sensors.RangeFinder;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 public class Robot extends IterativeRobot {
 
 	
@@ -44,8 +45,7 @@ public class Robot extends IterativeRobot {
     	range = new RangeFinder(0);
     	//rgb = new RGBController(panel);
     	CameraServer server = CameraServer.getInstance();
-    	server.setQuality(50);
-    	server.startAutomaticCapture("cam0");
+    	server.startAutomaticCapture("cam0", 0);
     
     }
     

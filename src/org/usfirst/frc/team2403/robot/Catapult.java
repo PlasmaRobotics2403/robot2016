@@ -2,8 +2,11 @@ package org.usfirst.frc.team2403.robot;
 
 import org.usfirst.frc.team2403.robot.controllers.PlasmaButton;
 
+
+
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CANTalon.*;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult {

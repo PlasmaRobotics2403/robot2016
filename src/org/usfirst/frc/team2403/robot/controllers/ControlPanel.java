@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2403.robot.controllers;
 
-import edu.wpi.first.wpilibj.communication.FRCNetworkCommunicationsLibrary;
+import edu.wpi.first.wpilibj.hal.HAL;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -72,13 +72,13 @@ public class ControlPanel {
 		*/
 		//SmartDashboard.putNumber("auton", autonMode);
 
-		autonMode = (int)SmartDashboard.getNumber("auton");
-		FRCNetworkCommunicationsLibrary.HALSetJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode], (short)0, (short)0);
+		autonMode = (int)SmartDashboard.getNumber("auton", -1);
+		HAL.setJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode], (short)0, (short)0);
 		//DriverStation.reportError(getSelectedMode() + "", false);
 	}
 	
 	public void lockSelection(){
-		FRCNetworkCommunicationsLibrary.HALSetJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode] | ControlPanelConstants.DECIMAL, (short)0, (short)0);
+		HAL.setJoystickOutputs((byte)port, ControlPanelConstants.DISPLAY_VALUES[autonMode] | ControlPanelConstants.DECIMAL, (short)0, (short)0);
 	}
 	
 }

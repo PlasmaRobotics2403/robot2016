@@ -3,7 +3,7 @@ package org.usfirst.frc.team2403.robot;
 
 import org.usfirst.frc.team2403.robot.controllers.PlasmaTrigger;
 
-import edu.wpi.first.wpilibj.*;
+import com.ctre.CANTalon;
 
 public class Climber {
 
