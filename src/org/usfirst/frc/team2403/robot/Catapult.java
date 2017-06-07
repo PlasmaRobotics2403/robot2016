@@ -38,12 +38,12 @@ public class Catapult {
 	 */
 	public Catapult(int port) {
     	catapult = new CANTalon(port);
-    	catapult.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	catapult.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
     	catapult.configNominalOutputVoltage(0, 0);
     	catapult.configPeakOutputVoltage(12, -12);
     	catapult.setPID(Constants.RELOAD_PID[0], Constants.RELOAD_PID[1], Constants.RELOAD_PID[2]);
     	isReadyToFire = true;
-    	catapult.setPosition(0);
+    	catapult.setPulseWidthPosition(0);
     	//home = getDegrees();
     	state = ShootingState.WAIT_FOR_INPUT;
     	limit = 0;
@@ -72,7 +72,7 @@ public class Catapult {
 		catapult.changeControlMode(TalonControlMode.PercentVbus);
 		if(isReadyToFire){
 			isReadyToFire = false;
-			catapult.setPosition(0);
+			catapult.setPulseWidthPosition(0);
 			limit = distance/(Constants.DEGREES_PER_TICK * 4096);
 			catapult.setForwardSoftLimit(limit);
 			catapult.setReverseSoftLimit(limit);
@@ -96,11 +96,17 @@ public class Catapult {
 	 * @author Nic A
 	 */
 	public boolean reload(){
+		/*
 		catapult.changeControlMode(TalonControlMode.Speed);
 		catapult.setProfile(Constants.RELOAD_PROFILE);
 		catapult.enableForwardSoftLimit(false);
 		catapult.enableReverseSoftLimit(false);
 		catapult.set(Constants.RELOAD_SPEED);
+		*/
+		catapult.changeControlMode(TalonControlMode.PercentVbus);
+		catapult.enableForwardSoftLimit(false);
+		catapult.enableReverseSoftLimit(false);
+		catapult.set(.15);
 		if(catapult.getPosition() > -0.15){
 			isReadyToFire = true;
 			return true;

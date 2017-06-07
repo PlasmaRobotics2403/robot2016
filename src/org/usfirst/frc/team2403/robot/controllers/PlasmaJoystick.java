@@ -24,7 +24,7 @@ public class PlasmaJoystick{
 	
 	public PlasmaTrigger LT;
 	public PlasmaTrigger RT;
-	
+		
 	private final int port;
 	
 	/**
